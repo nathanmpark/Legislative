@@ -1,6 +1,8 @@
 # Legislative
 Stay up to date on current bills
 
+### Pitch
+
 Hi my name is Nathan, and I’m from Washington, DC.
 
 Growing up right outside of the nation’s capital, I was exposed to the importance of one’s civic duty, whether its recycling, going out to vote, or simply staying up to date on current issues.
