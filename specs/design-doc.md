@@ -32,12 +32,12 @@
 * Historical Reporting (year, month, day)
 
 
-###Working Agreement
+###Working Agreement:
 * Weekends 10am-7pm
 * Physical Kanban Board
 * Weedays 9am - 6pm+
 
-###Git Workflow
+###Git Workflow:
 * Create branches by feature
 * Physically work near each other, flexible solo/pair
 * Check in @ 9am, 12pm, 3pm, 5pm
