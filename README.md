@@ -1,5 +1,5 @@
 # Legislative
-Stay up to date on current bills
+Stay up to date on current bills hitting the house and senate floors
 
 ### Pitch
 
