@@ -1,0 +1,60 @@
+extends layout
+
+block content
+    h1= 'Legislative'
+    p Stay up to date on current bills hitting the house and senate floors
+
+    // Wrapper
+    #wrapper
+
+        // BILL INFO
+        #billInfo
+            h2 Bill Info
+            p
+                strong Title:
+                |  <span id='billInfoTitle'></span>
+                br
+                strong Description:
+                |  <span id='billInfoDescription'></span>
+                br
+                strong Bill_Id:
+                |  <span id='billInfoId'></span>
+        // /BILL INFO
+
+        // BILL LIST
+        h2 BILL List
+        #billList
+            table
+                thead
+                    th BillName
+                    th Description
+                    th Show
+                tbody
+        // /BILL LIST
+
+        // ADD BILL
+        h2 Add Bill
+        #addBill
+            fieldset
+                input#inputBillTitle(type='text', placeholder='Title')
+                br
+                input#inputBillDescription(type='text', placeholder='Description')
+                br
+                input#inputBillId(type='text', placeholder='Bill Id')
+                br
+                button#btnAddBill Add Bill
+        // /ADD BILL
+
+        // API LIST
+        #apiInfo
+            h2 API Info
+            p
+                strong Bill Id:
+                |  <span id='api'></span>
+                br                
+                strong API JSON:
+                |  <span id='json'></span>
+                br
+        // /API LIST       
+
+    // /WRAPPER
