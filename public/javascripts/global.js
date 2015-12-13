@@ -48,6 +48,8 @@ function getBills() {
 
         var bills = response.results
 
+        // console.log(bills)
+
         $.each(bills, function(){
             bill_ids.push(this.bill_id)
         });
@@ -65,15 +67,12 @@ function billKeywords(upcoming_bills) {
             type: 'get',
             url: request
         }).done(function(response){
-
-            var collection = bill_details
-
             // write full details
             var committee_list = response.results[0].committee_ids
-            getCommitteeName(committee_list)
+            var data = getCommitteeName(committee_list)
+            setCommitteeKeywords(data);
         })
     });
-    // setCommitteeKeywords(committee_ids);
 };
 
 
@@ -82,13 +81,14 @@ function getUrl(bill_id) {
 };
 
 function getCommitteeUrl(committee_id) {
-    return 'congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+    return 'http://congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 }
 
 function getCommitteeName(committee_list){
     for (var i = 0; i < committee_list.length; i++) {
         committee_ids.push(committee_list[i])
     }
+    return committee_ids
 }
 
 function setCommitteeKeywords(committee_ids) {
@@ -99,7 +99,7 @@ function setCommitteeKeywords(committee_ids) {
             type: 'get',
             url: request
         }).done(function(response){
-            console.log(response)
+            console.log(response.results[0].name)
         })
     });
 }
