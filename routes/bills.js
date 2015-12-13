@@ -13,7 +13,7 @@ router.get('/bill_list', function(req, res) {
 });
 
 /*
- * POST to adduser.
+ * POST to add_bill.
  */
 router.post('/add_bill', function(req, res) {
     var db = req.db;
@@ -23,10 +23,6 @@ router.post('/add_bill', function(req, res) {
             (err === null) ? { msg: '' } : { msg: err }
         );
     });
-
-    // db.collection('collectionName').insert({req.data}, function (err, doc) {
-    //        //rest of code 
-    // });  
 });
 
 module.exports = router;
