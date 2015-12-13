@@ -1,29 +1,25 @@
-// Bill_list data array for filling in info box
-var billListData = [];
+// Bill_ids data array for filling in info box
+var bill_ids = [];
+var committee_ids = [];
 
 // DOM Ready =============================================================
 $(document).ready(function() {
 
-    // Populate the user table on initial page load
     populateTable();
 
-    // Title link click
     $('#billList table tbody').on('click', 'td a.linkshowbill', showBillInfo);
 
-    // Show Bill link click
     $('#billList table tbody').on('click', 'td a.linkapibill', showBill);
+
+    getBills();
 
 });
 
 // Functions =============================================================
-
-// Fill table with data
 function populateTable() {
 
-    // Empty content string
     var tableContent = '';
 
-    // jQuery AJAX call for API JSON
     $.ajax({
         type: 'GET',
         url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
@@ -31,22 +27,26 @@ function populateTable() {
 
         var bills = response.results
 
-        // For each item in our array of data, add a table row and cells to the content string
         $.each(bills, function(){
             tableContent += '<tr>';
             tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
             tableContent += '<td>' + (this.context || this.description) + '</td>';
             tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
             tableContent += '</tr>';
-
-            // write db insert statement for each bill
-            // db.upcoming_bills.insert(this)
         });
 
-        // Inject the whole content string into our existing HTML table
         $('#billList table tbody').html(tableContent);
+    });
+};
 
-        var bill_ids = []
+function getBills() {
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
+    }).done(function(response) {
+
+        var bills = response.results
 
         $.each(bills, function(){
             bill_ids.push(this.bill_id)
@@ -58,8 +58,6 @@ function populateTable() {
 
 function billKeywords(upcoming_bills) {
 
-    committee_ids = []
-
     $.each(upcoming_bills, function(){
         var request = getUrl(this) 
 
@@ -68,18 +66,16 @@ function billKeywords(upcoming_bills) {
             url: request
         }).done(function(response){
 
+            var collection = bill_details
+
+            // write full details
             var committee_list = response.results[0].committee_ids
-
-            for (var i = 0; i < committee_list.length; i++) {
-                committee_ids.push(committee_list[i])
-            }
-            console.log(committee_ids)
-
-            return committee_ids
+            getCommitteeName(committee_list)
         })
     });
-    console.log(committee_ids)
+    // setCommitteeKeywords(committee_ids);
 };
+
 
 function getUrl(bill_id) {
     return 'http://congress.api.sunlightfoundation.com/bills?bill_id=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
@@ -87,6 +83,25 @@ function getUrl(bill_id) {
 
 function getCommitteeUrl(committee_id) {
     return 'congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+}
+
+function getCommitteeName(committee_list){
+    for (var i = 0; i < committee_list.length; i++) {
+        committee_ids.push(committee_list[i])
+    }
+}
+
+function setCommitteeKeywords(committee_ids) {
+    $.each(committee_ids, function(){
+        var request = getCommitteeUrl(this) 
+
+        $.ajax({
+            type: 'get',
+            url: request
+        }).done(function(response){
+            console.log(response)
+        })
+    });
 }
 
 // Show Bill Info
