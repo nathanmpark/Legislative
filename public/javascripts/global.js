@@ -70,7 +70,6 @@ function billKeywords(upcoming_bills) {
     });
 };
 
-
 function getUrl(bill_id) {
     return 'http://congress.api.sunlightfoundation.com/bills?bill_id=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 };
