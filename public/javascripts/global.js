@@ -82,12 +82,30 @@ function setCommitteeKeywords(bill_id, committee_ids) {
             type: 'get',
             url: request
         }).done(function(response){
-            var object = {}
-            object[bill_id] = response.results[0].name
-            console.log(object)
+            var bill = {}
+            bill[bill_id] = response.results[0].name
+
+            addBill(bill);
         })
     });
 }
+
+// Add Bill
+function addBill(bill) {
+
+    // console.log(bill)
+
+    $.ajax({
+        type: 'POST',
+        data: bill,
+        url: '/bills/add_bill',
+        dataType: 'JSON'
+    }).done(function(response) {
+        console.log(response)
+        console.log('YAYAYAYAYAYAYA')
+    });
+
+};
 
 
 
