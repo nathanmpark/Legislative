@@ -46,9 +46,6 @@ function getBills() {
 
         var bills = response.results
 
-        console.log(bills)
-        console.log('*********************')
-
         $.each(bills, function(){
             bill_ids.push(this.bill_id)
         });
@@ -67,10 +64,8 @@ function billKeywords(upcoming_bills) {
             url: request
         }).done(function(response){
             var committee_list = response.results[0].committee_ids
-            console.log(committee_list)
-            console.log('####################')
-            // var bill_id = response.results[0].bill_id
-            setCommitteeKeywords(committee_list);
+            var bill_id = response.results[0].bill_id
+            setCommitteeKeywords(bill_id, committee_list);
         })
     });
 };
@@ -84,7 +79,7 @@ function getCommitteeUrl(committee_id) {
     return 'http://congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 }
 
-function setCommitteeKeywords(committee_ids) {
+function setCommitteeKeywords(bill_id, committee_ids) {
     $.each(committee_ids, function(bill_id){
         var request = getCommitteeUrl(this) 
 
@@ -92,7 +87,8 @@ function setCommitteeKeywords(committee_ids) {
             type: 'get',
             url: request
         }).done(function(response){
-            console.log(response.results[0].name)
+            
+            console.log({bill_id: response.results[0].name})
         })
     });
 }
