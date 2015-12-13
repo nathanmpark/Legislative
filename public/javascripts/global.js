@@ -1,40 +1,32 @@
-// Bill_list data array for filling in info box
-var billListData = [];
+// Bill_ids data array for filling in info box
+var bill_ids = [];
+var committee_ids = [];
 
 // DOM Ready =============================================================
 $(document).ready(function() {
 
-    // Populate the user table on initial page load
     populateTable();
 
-    // Title link click
     $('#billList table tbody').on('click', 'td a.linkshowbill', showBillInfo);
 
-    // Add Bill button click
-    $('#btnAddBill').on('click', addBill);
-
-    // Show Bill link click
     $('#billList table tbody').on('click', 'td a.linkapibill', showBill);
+
+    getBills();
 
 });
 
 // Functions =============================================================
-
-// Fill table with data
 function populateTable() {
 
-    // Empty content string
     var tableContent = '';
 
-    // jQuery AJAX call for API JSON
     $.ajax({
         type: 'GET',
         url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
-    }).done(function( response ) {
+    }).done(function(response) {
 
         var bills = response.results
 
-        // For each item in our array of data, add a table row and cells to the content string
         $.each(bills, function(){
             tableContent += '<tr>';
             tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
@@ -43,10 +35,74 @@ function populateTable() {
             tableContent += '</tr>';
         });
 
-        // Inject the whole content string into our existing HTML table
         $('#billList table tbody').html(tableContent);
     });
 };
+
+function getBills() {
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
+    }).done(function(response) {
+
+        var bills = response.results
+
+        $.each(bills, function(){
+            bill_ids.push(this.bill_id)
+        });
+
+        billKeywords(bill_ids)
+    });
+};
+
+function billKeywords(upcoming_bills) {
+
+    $.each(upcoming_bills, function(){
+        var request = getUrl(this) 
+
+        $.ajax({
+            type: 'get',
+            url: request
+        }).done(function(response){
+
+            var collection = bill_details
+
+            // write full details
+            var committee_list = response.results[0].committee_ids
+            getCommitteeName(committee_list)
+        })
+    });
+    // setCommitteeKeywords(committee_ids);
+};
+
+
+function getUrl(bill_id) {
+    return 'http://congress.api.sunlightfoundation.com/bills?bill_id=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+};
+
+function getCommitteeUrl(committee_id) {
+    return 'congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+}
+
+function getCommitteeName(committee_list){
+    for (var i = 0; i < committee_list.length; i++) {
+        committee_ids.push(committee_list[i])
+    }
+}
+
+function setCommitteeKeywords(committee_ids) {
+    $.each(committee_ids, function(){
+        var request = getCommitteeUrl(this) 
+
+        $.ajax({
+            type: 'get',
+            url: request
+        }).done(function(response){
+            console.log(response)
+        })
+    });
+}
 
 // Show Bill Info
 function showBillInfo(event) {
@@ -69,60 +125,6 @@ function showBillInfo(event) {
     $('#billInfoId').text(thisBillObject.bill_id);
 
 };
-
-// Add User
-function addBill(event) {
-    event.preventDefault();
-
-    // Super basic validation - increase errorCount variable if any fields are blank
-    var errorCount = 0;
-    $('#addBill input').each(function(index, val) {
-        if($(this).val() === '') { errorCount++; }
-    });
-
-    // Check and make sure errorCount's still at zero
-    if(errorCount === 0) {
-
-        // If it is, compile all user info into one object
-        var newBill = {
-            'title': $('#addBill fieldset input#inputBillTitle').val(),
-            'description': $('#addBill fieldset input#inputBillDescription').val(),
-            'bill_id': $('#addBill fieldset input#inputBillId').val(),
-        }
-
-        // Use AJAX to post the object to our adduser service
-        $.ajax({
-            type: 'POST',
-            data: newBill,
-            url: '/bills/add_bill',
-            dataType: 'JSON'
-        }).done(function( response ) {
-
-            // Check for successful (blank) response
-            if (response.msg === '') {
-
-                // Clear the form inputs
-                $('#addBill fieldset input').val('');
-
-                // Update the table
-                populateTable();
-
-            }
-            else {
-
-                // If something goes wrong, alert the error message that our service returned
-                alert('Error: ' + response.msg);
-
-            }
-        });
-    }
-    else {
-        // If errorCount is more than 0, error out
-        alert('Please fill in all fields');
-        return false;
-    }
-};
-
 
 // Get Api
 function showBill(event) {
