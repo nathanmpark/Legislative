@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 // Database
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/leg-test');
+var db = monk('localhost:27017/Legislative');
 
 var routes = require('./routes/index');
 var bills = require('./routes/bills');

@@ -3,10 +3,6 @@ $(document).ready(function() {
 
     populateTable();
 
-    $('#billList table tbody').on('click', 'td a.linkshowbill', showBillInfo);
-
-    $('#billList table tbody').on('click', 'td a.linkapibill', showBill);
-
     getBills();
 
 });
@@ -86,54 +82,32 @@ function setCommitteeKeywords(bill_id, committee_ids) {
             type: 'get',
             url: request
         }).done(function(response){
-            var object = {}
-            object[bill_id] = response.results[0].name
-            console.log(object)
+            var bill = {}
+            bill[bill_id] = response.results[0].name
+
+            addBill(bill);
         })
     });
 }
 
-// Show Bill Info
-function showBillInfo(event) {
+// Add Bill
+function addBill(bill) {
 
-    // Prevent Link from Firing
-    event.preventDefault();
-
-    // Retrieve bill from link rel attribute
-    var thisBillName = $(this).attr('rel');
-
-    // Get Index of object based on id value
-    var arrayPosition = billListData.map(function(arrayItem) { return arrayItem.title; }).indexOf(thisBillName);
-
-    // Get our Bill Object
-    var thisBillObject = billListData[arrayPosition];
-
-    //Populate Info Box
-    $('#billInfoTitle').text(thisBillObject.title);
-    $('#billInfoDescription').text(thisBillObject.description);
-    $('#billInfoId').text(thisBillObject.bill_id);
-
-};
-
-// Get Api
-function showBill(event) {
-
-    event.preventDefault();
+    // console.log(bill)
 
     $.ajax({
-        type: 'GET',
-        url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
-    }).done(function( response ) {
-        // debugger
-        for (var i = 0; i < response.results.length; i ++){
-            $('#api').append(response.results[i].bill_id + ' | ');
-        }
-        for (var i = 0; i < response.results.length; i ++){
-            console.log(response.results[i])
-            $('#json').append(response.results[i]);
-        }
+        type: 'POST',
+        data: bill,
+        url: '/bills/add_bill',
+        dataType: 'JSON'
+    }).done(function(response) {
+        console.log(response)
+        console.log('YAYAYAYAYAYAYA')
     });
+
 };
+
+
 
 
 
