@@ -6,11 +6,9 @@ take bill ids
 connect to /bills api
  --> array of detailed bill info
 get list of committees
-
 map committees to key words
- --> write to database
+
 map bill ids to key words
- --> write to database
  { bill_id: keywords}
 
 

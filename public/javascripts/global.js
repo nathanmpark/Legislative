@@ -1,7 +1,3 @@
-// Bill_ids data array for filling in info box
-var bill_ids = [];
-var committee_ids = [];
-
 // DOM Ready =============================================================
 $(document).ready(function() {
 
@@ -41,12 +37,17 @@ function populateTable() {
 
 function getBills() {
 
+    var bill_ids = [];
+
     $.ajax({
         type: 'GET',
         url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
     }).done(function(response) {
 
         var bills = response.results
+
+        console.log(bills)
+        console.log('*********************')
 
         $.each(bills, function(){
             bill_ids.push(this.bill_id)
@@ -65,15 +66,13 @@ function billKeywords(upcoming_bills) {
             type: 'get',
             url: request
         }).done(function(response){
-
-            var collection = bill_details
-
-            // write full details
             var committee_list = response.results[0].committee_ids
-            getCommitteeName(committee_list)
+            console.log(committee_list)
+            console.log('####################')
+            // var bill_id = response.results[0].bill_id
+            setCommitteeKeywords(committee_list);
         })
     });
-    // setCommitteeKeywords(committee_ids);
 };
 
 
@@ -82,24 +81,18 @@ function getUrl(bill_id) {
 };
 
 function getCommitteeUrl(committee_id) {
-    return 'congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
-}
-
-function getCommitteeName(committee_list){
-    for (var i = 0; i < committee_list.length; i++) {
-        committee_ids.push(committee_list[i])
-    }
+    return 'http://congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 }
 
 function setCommitteeKeywords(committee_ids) {
-    $.each(committee_ids, function(){
+    $.each(committee_ids, function(bill_id){
         var request = getCommitteeUrl(this) 
 
         $.ajax({
             type: 'get',
             url: request
         }).done(function(response){
-            console.log(response)
+            console.log(response.results[0].name)
         })
     });
 }
