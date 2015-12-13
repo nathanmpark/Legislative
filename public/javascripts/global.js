@@ -79,15 +79,16 @@ function getCommitteeUrl(committee_id) {
 }
 
 function setCommitteeKeywords(bill_id, committee_ids) {
-    $.each(committee_ids, function(bill_id){
+    $.each(committee_ids, function(){
         var request = getCommitteeUrl(this) 
 
         $.ajax({
             type: 'get',
             url: request
         }).done(function(response){
-            
-            console.log({bill_id: response.results[0].name})
+            var object = {}
+            object[bill_id] = response.results[0].name
+            console.log(object)
         })
     });
 }
