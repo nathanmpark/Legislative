@@ -1,11 +1,11 @@
-<h2><%=heading%></h2>
-<h2><%=welcome%></h2>
-
- <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang='en'>
 <html>
   <head>
-    <title></title>
+    <title>legistative</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="d3/d3.v3.js"></script>
   </head>
   <body>
     <h1>Legislative</h1>
@@ -15,6 +15,11 @@
       <!-- BILL LIST-->
       <h2>BILL List</h2>
       <div id="billList">
+
+        <script type="text/javascript">
+          d3.select("body").append("p").text("New paragraph!");
+        </script>
+
         <table>
           <thead>
             <th>BillName</th>
