@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('leg-test:server');
+var debug = require('debug')('Legislative:server');
 var http = require('http');
 
 /**
