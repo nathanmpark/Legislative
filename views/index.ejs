@@ -1,0 +1,46 @@
+<!-- <!DOCTYPE html> -->
+doctype
+.html
+<html lang='en'>
+<html>
+  <head>
+    <title>legistative</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="d3/d3.v3.js"></script>
+  </head>
+  <body>
+    <h1>Legislative</h1>
+    <p>Stay up to date on current bills hitting the house and senate floors</p>
+    <!-- Wrapper-->
+    <div id="wrapper">
+      <!-- BILL LIST-->
+      <h2>BILL List</h2>
+      <div id="billList">
+
+        <script type="text/javascript">
+          d3.select("body").append("p").text("New paragraph!");
+        </script>
+
+        <table>
+          <thead>
+            <th>BillName</th>
+            <th>Description</th>
+            <th>Show</th>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- /BILL LIST-->
+      <!-- API LIST-->
+      <div id="billInfo">
+        <h2>API Info</h2>
+        <p><strong>Bill Id:</strong> <span id='billInforTitle'></span><br><strong>API JSON:</strong> <span id='billInforDescription'></span><br></p>
+      </div>
+      <!-- /API LIST       -->
+    </div>
+    <!-- /WRAPPER-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="/javascripts/global.js"></script>
+  </body>
+<!-- </html> -->

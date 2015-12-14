@@ -14,7 +14,7 @@ function populateTable() {
 
     $.ajax({
         type: 'GET',
-        url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
+        url: 'https://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
     }).done(function(response) {
 
         var bills = response.results
@@ -37,7 +37,7 @@ function getBills() {
 
     $.ajax({
         type: 'GET',
-        url: 'http://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
+        url: 'https://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
     }).done(function(response) {
 
         var bills = response.results
@@ -61,21 +61,17 @@ function billKeywords(upcoming_bills) {
         }).done(function(response){
             var committee_list = response.results[0].committee_ids
             var bill_id = response.results[0].bill_id
-            var bill = {}
-            bill['bill_id'] = bill_id
-            addBill(bill);
-
             setCommitteeKeywords(bill_id, committee_list);
         })
     });
 };
 
 function getUrl(bill_id) {
-    return 'http://congress.api.sunlightfoundation.com/bills?bill_id=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+    return 'https://congress.api.sunlightfoundation.com/bills?bill_id=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 };
 
 function getCommitteeUrl(committee_id) {
-    return 'http://congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+    return 'https://congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 }
 
 function setCommitteeKeywords(bill_id, committee_ids) {
@@ -86,17 +82,15 @@ function setCommitteeKeywords(bill_id, committee_ids) {
             type: 'get',
             url: request
         }).done(function(response){
-            var bill_info = {}
-            bill_info['bill_id'] = bill_id
+            var bill = {}
+            bill['bill_id'] = bill_id
 
             var committee_id = response.results[0].committee_id
             var committee_name = response.results[0].name
-            bill_info['committee_id'] = committee_id
-            bill_info['committee_name'] = committee_name
+            bill['committee_id'] = committee_id
+            bill['committee_name'] = committee_name
 
-            console.log(bill_info)
-
-            addCommittee(bill_info)
+            addBill(bill)
         })
     });
 }
@@ -109,18 +103,6 @@ function addBill(bill) {
         url: '/bills/add_bill',
         dataType: 'JSON'
     });
-};
-
-function addCommittee(bill_info) {
-
-    $.ajax({
-        type: 'POST',
-        data: bill_info,
-        url: '/bills/add_committee',
-        dataType: 'JSON'
-    }).done(function(response){
-        // console.log('YOU MADE ITTTT')
-    })
 };
 
 
