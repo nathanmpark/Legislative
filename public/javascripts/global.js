@@ -88,11 +88,11 @@ function setCommitteeKeywords(bill_id, committee_ids) {
         }).done(function(response){
             var bill_info = {}
             bill_info['bill_id'] = bill_id
-            bill_info['committees'] = {}
 
             var committee_id = response.results[0].committee_id
             var committee_name = response.results[0].name
-            bill_info['committees'][committee_id] = committee_name
+            bill_info['committee_id'] = committee_id
+            bill_info['committee_name'] = committee_name
 
             console.log(bill_info)
 
@@ -119,7 +119,7 @@ function addCommittee(bill_info) {
         url: '/bills/add_committee',
         dataType: 'JSON'
     }).done(function(response){
-        console.log('YOU MADE ITTTT')
+        // console.log('YOU MADE ITTTT')
     })
 };
 
