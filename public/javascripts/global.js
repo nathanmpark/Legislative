@@ -1,9 +1,10 @@
+getBills();
+
 // DOM Ready =============================================================
 $(document).ready(function() {
 
     populateTable();
-
-    getBills();
+    graphData();
 
 });
 
@@ -104,6 +105,8 @@ function addBill(bill) {
         dataType: 'JSON'
     });
 };
+
+
 
 
 
