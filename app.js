@@ -12,6 +12,7 @@ var db = monk('localhost:27017/Legislative');
 var routes = require('./routes/index');
 var bills = require('./routes/bills');
 
+
 var app = express();
 
 // view engine setup
@@ -65,6 +66,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
 
 
 module.exports = app;

@@ -1,3 +1,4 @@
+<canvas id="chart" width="600" height="400"></canvas>
 
 <!DOCTYPE html>
 <html>
@@ -7,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
   </head>
   <body>
     <h1>Legislative</h1>
@@ -15,9 +17,9 @@
       <h2>BILL List</h2>
       <div id="billList">
 
-        <script type="text/javascript">
-          d3.select("body").append("p").text("New paragraph!");
-        </script>
+        // <script type="text/javascript">
+        //   d3.select("body").append("p").text("New paragraph!");
+        // </script>
 
         <table>
           <thead>
@@ -33,189 +35,35 @@
         <p><strong>Bill Id:</strong> <span id='billInforTitle'></span><br><strong>API JSON:</strong> <span id='billInforDescription'></span><br></p>
       </div>
     </div>
+
+
     <script>
+      var chartData = [
+        {
+          label: 'Aging', 
+          value: 2, 
+          color: "#F7464A"
+        }, 
+        {
+          label: 'Agriculture, Nutrition, and Forestry', 
+          value: 9, 
+          color: "#46BFBD"
+        }, 
+        {
+          label: 'Appropriations', 
+          value: 5, 
+          color: "#FDB45C"
+        }
+      ];
 
-//   // function exampleData() {
-//   //   return  [
-//   //     {"label": 'Aging', "value": 2}, 
-//   //     {"label": 'Agriculture, Nutrition, and Forestry', "value": 19}, 
-//   //     {"label": 'Appropriations', "value": 5}, 
-//   //     {"label": 'Armed Services', "value": 15}, 
-//   //     {"label": 'Banking, Housing, and Urban Affairs', "value": 25}, 
-//   //     {"label": 'Budget', "value": 1}, 
-//   //     {"label": 'Commerce, Science, and Transportation', "value": 2}, 
-//   //     {"label": 'Energy and Natural Resources', "value": 3}, 
-//   //     {"label": 'Environment and Public Works', "value": 2}, 
-//   //     {"label": 'Ethics', "value": 1}, 
-//   //     {"label": 'Finance', "value": 9}, 
-//   //     {"label": 'Foreign Relations', "value": 6}, 
-//   //     {"label": 'Health, Education, Labor, and Pensions', "value": 10}, 
-//   //     {"label": 'Homeland Security and Governmental Affairs', "value": 11}, 
-//   //     {"label": 'Indian Affairs', "value": 1}, 
-//   //     {"label": 'Intelligence', "value": 1}, 
-//   //     {"label": 'Judiciary', "value": 5}, 
-//   //     {"label": 'Rules and Administration', "value": 27}, 
-//   //     {"label": 'Small Business and Entrepreneurship', "value": 8}, 
-//   //     {"label": 'United States Senate Caucus on International', "value": 9}, 
-//   //     {"label": 'Narcotics Control', "value": 7}, 
-//   //     {"label": 'Veterans Affairs', "value": 8}, 
-//   //     {"label": 'Agriculture', "value": 14}, 
-//   //     {"label": 'Appropriations', "value": 18}, 
-//   //     {"label": 'Armed Services', "value": 19}, 
-//   //     {"label": 'Budget', "value": 8}, 
-//   //     {"label": 'Education and the Workforce', "value": 3}, 
-//   //     {"label": 'Energy and Commerce', "value": 6}, 
-//   //     {"label": 'Ethics', "value": 7}, 
-//   //     {"label": 'Events Surrounding the 2012 Terrorist Attack in Benghazi', "value": 20}, 
-//   //     {"label": 'Financial Services', "value": 10}, 
-//   //     {"label": 'Foreign Affairs', "value": 7}, 
-//   //     {"label": 'Homeland Security', "value": 18}, 
-//   //     {"label": 'House Administration', "value": 1}, 
-//   //     {"label": 'Intelligence', "value": 8}, 
-//   //     {"label": 'Judiciary', "value": 1}, 
-//   //     {"label": 'Natural Resources', "value": 10}, 
-//   //     {"label": 'Oversight and Government Reform', "value": 10}, 
-//   //     {"label": 'Rules', "value": 8}, 
-//   //     {"label": 'Science, Space, and Technology', "value": 22}, 
-//   //     {"label": 'Small Business', "value": 19}, 
-//   //     {"label": 'Transportation and Infrastructure', "value": 14}, 
-//   //     {"label": 'Veterans Affairs', "value": 10}, 
-//   //     {"label": 'Ways and Means', "value": 10}
-//   //   ];
-//   // }
-// //Pie chart example data. Note how there is only a single array of key-value pairs.
-// function exampleData() {
-//   return  [
-//       { 
-//         "label": "One",
-//         "value" : 29.765957771107
-//       } , 
-//       { 
-//         "label": "Two",
-//         "value" : 0
-//       } , 
-//       { 
-//         "label": "Three",
-//         "value" : 32.807804682612
-//       } , 
-//       { 
-//         "label": "Four",
-//         "value" : 196.45946739256
-//       } , 
-//       { 
-//         "label": "Five",
-//         "value" : 0.19434030906893
-//       } , 
-//       { 
-//         "label": "Six",
-//         "value" : 98.079782601442
-//       } , 
-//       { 
-//         "label": "Seven",
-//         "value" : 13.925743130903
-//       } , 
-//       { 
-//         "label": "Eight",
-//         "value" : 5.1387322875705
-//       }
-//     ];
-// }
-
-
-// //Donut chart example
-// nv.addGraph(function() {
-//   var chart = nv.models.pieChart()
-//       .x(function(d) { return d.label })
-//       .y(function(d) { return d.value })
-//       .showLabels(true)     //Display pie labels
-//       .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-//       .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-//       .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-//       .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
-//       ;
-
-//     d3.select("#chart2 svg")
-//         .datum(exampleData())
-//         .transition().duration(350)
-//         .call(chart);
-
-//   return chart;
-// });
-
-
-
-      </script>
-      
-//Regular pie chart example
-nv.addGraph(function() {
-  var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true);
-
-    d3.select("#chart svg")
-        .datum(exampleData())
-        .transition().duration(350)
-        .call(chart);
-
-  return chart;
-});
-
-//Donut chart example
-nv.addGraph(function() {
-  var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true)     //Display pie labels
-      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-      .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-      .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
-      ;
-
-    d3.select("#chart2 svg")
-        .datum(exampleData())
-        .transition().duration(350)
-        .call(chart);
-
-  return chart;
-});
-
-//Pie chart example data. Note how there is only a single array of key-value pairs.
-function exampleData() {
-  return  [
-      { 
-        "label": "One",
-        "value" : 29.765957771107
-      } , 
-      { 
-        "label": "Two",
-        "value" : 0
-      } , 
-      { 
-        "label": "Three",
-        "value" : 32.807804682612
-      } , 
-      { 
-        "label": "Four",
-        "value" : 196.45946739256
-      } , 
-      { 
-        "label": "Five",
-        "value" : 0.19434030906893
-      } , 
-      { 
-        "label": "Six",
-        "value" : 98.079782601442
-      } , 
-      { 
-        "label": "Seven",
-        "value" : 13.925743130903
-      } , 
-      { 
-        "label": "Eight",
-        "value" : 5.1387322875705
+      var chartOptions = {
+        segmentShowStroke : false,
+        animateScale : true
       }
-    ];
-}  </body>
-<!-- </html> -->
+
+      var chart = document.getElementById("chart").getContext("2d");
+      new Chart(chart).PolarArea(chartData, chartOptions);
+
+    </script>
+      
+  </body>
