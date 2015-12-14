@@ -2,12 +2,69 @@
 <html>
   <head>
     <title>Legislative</title>
+
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+
+<!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
   </head>
   <body>
+    <!-- CHART.js begin -->
+
+  <canvas id="myChart" width="400" height="400"></canvas>
+    <!-- where we define where the class or id with which to bind -->
+  <script>
+    var ctx = document.getElementById("myChart").getContext("2d");
+
+
+    var data = [
+    {
+        value: 300,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Red"
+    },
+    {
+        value: 50,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Green"
+    },
+    {
+        value: 100,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: "Yellow"
+    },
+    {
+        value: 40,
+        color: "#949FB1",
+        highlight: "#A8B3C5",
+        label: "Grey"
+    },
+    {
+        value: 120,
+        color: "#4D5360",
+        highlight: "#616774",
+        label: "Dark Grey"
+    }
+
+];
+
+
+    // <!-- call a method of the name of the chart we want to create. We pass in the data for that chart type, and the options for that chart as parameters. -->
+     new Chart(ctx).PolarArea(data, {animation:true, animationSteps: 250});
+  // <!-- Establish which type of chart we want -->
+    // var myNewChart = new Chart(ctx).PolarArea(data, {animation:true, animationSteps: 60});
+</script>
+    <!-- data -->
+
+<!-- CHART.js End -->
+
+
+
     <h1>Legislative</h1>
     <p>Stay up to date on current bills hitting the house and senate floors</p>
     <div id="wrapper">
@@ -27,82 +84,85 @@
         <p><strong>Bill Id:</strong> <span id='billInforTitle'></span><br><strong>API JSON:</strong> <span id='billInforDescription'></span><br></p>
       </div>
     </div>
-<!-- enter bubblegraph data here -->
-<script>
-function exampleData() {
-  return  [
-      {
-        "label": "One",
-        "value" : 29.765957771107
-      } ,
-      {
-        "label": "Two",
-        "value" : 0
-      } ,
-      {
-        "label": "Three",
-        "value" : 32.807804682612
-      } ,
-      {
-        "label": "Four",
-        "value" : 196.45946739256
-      } ,
-      {
-        "label": "Five",
-        "value" : 0.19434030906893
-      } ,
-      {
-        "label": "Six",
-        "value" : 98.079782601442
-      } ,
-      {
-        "label": "Seven",
-        "value" : 13.925743130903
-      } ,
-      {
-        "label": "Eight",
-        "value" : 5.1387322875705
-      }
-    ];
-}
 
 
-    //Regular pie chart example
-nv.addGraph(function() {
-  var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true);
 
-    d3.select("#chart svg")
-        .datum(exampleData())
-        .transition().duration(350)
-        .call(chart);
+<!-- enter D3 bubblegraph data here -->
+// <script>
+// function exampleData() {
+//   return  [
+//       {
+//         "label": "One",
+//         "value" : 29.765957771107
+//       } ,
+//       {
+//         "label": "Two",
+//         "value" : 0
+//       } ,
+//       {
+//         "label": "Three",
+//         "value" : 32.807804682612
+//       } ,
+//       {
+//         "label": "Four",
+//         "value" : 196.45946739256
+//       } ,
+//       {
+//         "label": "Five",
+//         "value" : 0.19434030906893
+//       } ,
+//       {
+//         "label": "Six",
+//         "value" : 98.079782601442
+//       } ,
+//       {
+//         "label": "Seven",
+//         "value" : 13.925743130903
+//       } ,
+//       {
+//         "label": "Eight",
+//         "value" : 5.1387322875705
+//       }
+//     ];
+// }
 
-  return chart;
-});
 
-//Donut chart example
-nv.addGraph(function() {
-  var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true)     //Display pie labels
-      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-      .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-      .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
-      ;
+//     //Regular pie chart example
+// nv.addGraph(function() {
+//   var chart = nv.models.pieChart()
+//       .x(function(d) { return d.label })
+//       .y(function(d) { return d.value })
+//       .showLabels(true);
 
-    d3.select("#chart2 svg")
-        .datum(exampleData())
-        .transition().duration(350)
-        .call(chart);
+//     d3.select("#chart svg")
+//         .datum(exampleData())
+//         .transition().duration(350)
+//         .call(chart);
 
-  return chart;
-});
+//   return chart;
+// });
 
-</script>
+// //Donut chart example
+// nv.addGraph(function() {
+//   var chart = nv.models.pieChart()
+//       .x(function(d) { return d.label })
+//       .y(function(d) { return d.value })
+//       .showLabels(true)     //Display pie labels
+//       .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+//       .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+//       .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+//       .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+//       ;
+
+//     d3.select("#chart2 svg")
+//         .datum(exampleData())
+//         .transition().duration(350)
+//         .call(chart);
+
+//   return chart;
+// });
+
+// </script>
 
 
   </body>
