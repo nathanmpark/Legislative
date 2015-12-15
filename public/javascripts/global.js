@@ -1,15 +1,10 @@
-// DOM Ready =============================================================
+getBills();
+
 $(document).ready(function() {
-
     populateTable();
-
-    getBills();
-
 });
 
-// Functions =============================================================
 function populateTable() {
-
     var tableContent = '';
 
     $.ajax({
@@ -32,7 +27,6 @@ function populateTable() {
 };
 
 function getBills() {
-
     var bill_ids = [];
 
     $.ajax({
@@ -51,19 +45,18 @@ function getBills() {
 };
 
 function billKeywords(upcoming_bills) {
+    $.each(upcoming_bills, function(){
+        var request = getUrl(this)
 
-    // $.each(upcoming_bills, function(){
-    //     var request = getUrl(this)
-
-    //     $.ajax({
-    //         type: 'get',
-    //         url: request
-    //     }).done(function(response){
-    //         var committee_list = response.results[0].committee_ids
-    //         var bill_id = response.results[0].bill_id
-    //         setCommitteeKeywords(bill_id, committee_list);
-    //     })
-    // });
+        $.ajax({
+            type: 'get',
+            url: request
+        }).done(function(response){
+            var committee_list = response.results[0].committee_ids
+            var bill_id = response.results[0].bill_id
+            setCommitteeKeywords(bill_id, committee_list);
+        })
+    });
 };
 
 function getUrl(bill_id) {
@@ -96,7 +89,6 @@ function setCommitteeKeywords(bill_id, committee_ids) {
 }
 
 function addBill(bill) {
-
     $.ajax({
         type: 'POST',
         data: bill,
@@ -104,6 +96,8 @@ function addBill(bill) {
         dataType: 'JSON'
     });
 };
+
+
 
 
 
