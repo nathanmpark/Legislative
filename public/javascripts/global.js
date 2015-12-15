@@ -52,9 +52,12 @@ function billKeywords(upcoming_bills) {
             type: 'get',
             url: request
         }).done(function(response){
-            var committee_list = response.results[0].committee_ids
-            var bill_id = response.results[0].bill_id
-            setCommitteeKeywords(bill_id, committee_list);
+            console.log("billKeywords response",response.results, request);
+            if(response.results && response.results.length > 0){
+                var committee_list = response.results[0].committee_ids
+                var bill_id = response.results[0].bill_id
+                setCommitteeKeywords(bill_id, committee_list);
+            }
         })
     });
 };
