@@ -12,7 +12,11 @@ var DB_URI = (process.env.MONGOLAB_URI) ? process.env.MONGOLAB_URI : 'mongodb://
 
 var db = monk(DB_URI);
 
-console.log(db)
+console.log("DB",db);
+
+var bill_list = db.get('bill_list');
+
+console.log("BILL LIST",bill_list);
 
 var routes = require('./routes/index');
 var bills = require('./routes/bills');
