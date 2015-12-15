@@ -1,16 +1,10 @@
 getBills();
 
-// DOM Ready =============================================================
 $(document).ready(function() {
-
     populateTable();
-    graphData();
-
 });
 
-// Functions =============================================================
 function populateTable() {
-
     var tableContent = '';
 
     $.ajax({
@@ -33,7 +27,6 @@ function populateTable() {
 };
 
 function getBills() {
-
     var bill_ids = [];
 
     $.ajax({
@@ -52,9 +45,8 @@ function getBills() {
 };
 
 function billKeywords(upcoming_bills) {
-
     $.each(upcoming_bills, function(){
-        var request = getUrl(this) 
+        var request = getUrl(this)
 
         $.ajax({
             type: 'get',
@@ -77,7 +69,7 @@ function getCommitteeUrl(committee_id) {
 
 function setCommitteeKeywords(bill_id, committee_ids) {
     $.each(committee_ids, function(){
-        var request = getCommitteeUrl(this) 
+        var request = getCommitteeUrl(this)
 
         $.ajax({
             type: 'get',
@@ -97,7 +89,6 @@ function setCommitteeKeywords(bill_id, committee_ids) {
 }
 
 function addBill(bill) {
-
     $.ajax({
         type: 'POST',
         data: bill,
