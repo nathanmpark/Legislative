@@ -38,7 +38,46 @@
           <tbody></tbody>
         </table>
       </div>
+    </div>
+    <div>
+      <h1>Bill in this Congressional Session</h1>
+    <canvas id="current_session" width="600" height="600"></canvas>
 
+    <script>
+      var congress = document.getElementById("current_session").getContext("2d");
+
+      var sessionData = {
+        labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
+        datasets: [
+          {
+            label: "Active",
+            fillColor: "rgba(220,220,220,0.5)",
+            strokeColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            highlightStroke: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 90]
+          },
+          {
+            label: "Passed",
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: [28, 48, 40, 19, 86, 27, 40]
+          },
+                    {
+            label: "Dead",
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: [28, 18, 10, 29, 46, 57, 50]
+          }
+        ]
+      };
+      new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true});
+      // var myBarChart = new Chart(congress).Bar(sessionData, scaleShowHorizontalLines: true);
+    </script>
     </div>
   </body>
 </html>
