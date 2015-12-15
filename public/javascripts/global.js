@@ -33,6 +33,7 @@ function getBills() {
         type: 'GET',
         url: 'https://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
     }).done(function(response) {
+        console.log(response)
 
         var bills = response.results
 
@@ -41,7 +42,9 @@ function getBills() {
         });
 
         billKeywords(bill_ids)
-    });
+    }).fail(function(error){
+        console.log("I am very disappointed..")
+    })
 };
 
 function billKeywords(upcoming_bills) {
@@ -60,6 +63,8 @@ function billKeywords(upcoming_bills) {
             } else {
                 console.log('Bill not found', request);
             }
+        }).fail(function(error){
+            console.log(error)
         })
     });
 };

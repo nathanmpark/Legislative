@@ -5,7 +5,13 @@ router.get('/bill_list', function(req, res) {
     var db = req.db;
     var collection = db.get('bill_list');
     collection.find({},{},function(e,docs){
-        res.json(docs);
+        if (e){
+            console.error("failed!", e);
+            res.status(500).send('Failed to get bill list');
+        } else {
+            res.json(docs);
+        }
+        // res.json(docs);
     });
 });
 
