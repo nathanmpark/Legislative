@@ -14,19 +14,18 @@
     <p>Stay up to date on current bills hitting the house and senate floors</p>
     <div id="wrapper">
 
-  <canvas id="myChart" width="400" height="400"></canvas>
-  <script>
-    var ctx = document.getElementById("myChart").getContext("2d");
+      <canvas id="myChart" width="600" height="600"></canvas>
+      <script>
+        var ctx = document.getElementById("myChart").getContext("2d");
 
-    $.ajax({
-      type: 'GET',
-      url: '/bills/bill_data'
-    }).done(function(response){
-      var bill_data = response;
-      new Chart(ctx).PolarArea(bill_data, {animation:true, animationSteps: 250});
-    });
-
-</script>
+        $.ajax({
+          type: 'GET',
+          url: '/bills/bill_data'
+        }).done(function(response){
+          var bill_data = response;
+          new Chart(ctx).PolarArea(bill_data, {animation:true, animationSteps: 250});
+        });
+      </script>
 
       <h2>BILL List</h2>
       <div id="billList">
@@ -39,6 +38,7 @@
           <tbody></tbody>
         </table>
       </div>
+      
     </div>
   </body>
 </html>
