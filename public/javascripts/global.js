@@ -89,11 +89,18 @@ function setCommitteeKeywords(bill_id, committee_ids) {
 }
 
 function addBill(bill) {
-    $.ajax({
-        type: 'POST',
-        data: bill,
-        url: '/bills/add_bill',
-        dataType: 'JSON'
+    // $.ajax({
+    //     type: 'POST',
+    //     data: bill,
+    //     url: '/bills/add_bill',
+    //     dataType: 'JSON'
+    // });
+
+    $.ajax({ 
+        url: "https://api.mongolab.com/api/1/databases/heroku_wmkmzfbt/collections/bill_list?apiKey=" + process.env.API_KEY,
+        data: JSON.stringify(bill),
+        type: "POST",
+        contentType: "application/json" 
     });
 };
 
