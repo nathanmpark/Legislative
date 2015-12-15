@@ -12,6 +12,7 @@ router.get('/bill_list', function(req, res) {
 router.post('/add_bill', function(req, res) {
     var db = req.db;
     var collection = db.get('bill_list');
+    console.log("Add Bill Request Body: ",req.body);
     collection.update(
     	{'bill_id': req.body.bill_id, 
     		'committees': 
@@ -25,6 +26,8 @@ router.post('/add_bill', function(req, res) {
     	}, 
     	{'upsert': true},
 	    function(err, result){
+            if(err){console.error("add bill error", err);}
+            if(result){console.log("add bill result", result);}
 	        res.send(
 	            (err === null) ? { msg: '' } : { msg: err }
 	        );
