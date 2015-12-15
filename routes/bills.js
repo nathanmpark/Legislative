@@ -43,13 +43,17 @@ router.get('/bill_data', function(req, res) {
 
     function graphData(data) {
         var bill_data = {}
-        for (var i = 0; i < data.length; i++) {
-            var committee_name = data[i].committees.committee_name
-            if (bill_data.hasOwnProperty(committee_name)){
-                bill_data[committee_name]++;
-            } else {
-                bill_data[committee_name] = 1;
-            };
+        if(data){
+            for (var i = 0; i < data.length; i++) {
+                var committee_name = data[i].committees.committee_name
+                if (bill_data.hasOwnProperty(committee_name)){
+                    bill_data[committee_name]++;
+                } else {
+                    bill_data[committee_name] = 1;
+                };
+            }
+        } else {
+            console.error('No data in graphData()');
         }
         return bill_data
     };
