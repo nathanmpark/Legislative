@@ -12,20 +12,20 @@ var DB_URI = (process.env.MONGOLAB_URI) ? process.env.MONGOLAB_URI : 'mongodb://
 
 var db = monk(DB_URI);
 
-console.log("DB",db);
+// console.log("DB",db);
 
 var bill_list = db.get('bill_list');
 
-console.log("BILL LIST",bill_list);
+// console.log("BILL LIST",bill_list);
 
 
-bill_list.find({},{},function(e,docs){
-    if(e){
-        console.error("BILL LIST ERROR",e);
-    } else {
-        console.log("BILL LIST DOCS",docs);
-    }
-});
+// bill_list.find({},{},function(e,docs){
+//     if(e){
+//         console.error("BILL LIST ERROR",e);
+//     } else {
+//         console.log("BILL LIST DOCS",docs);
+//     }
+// });
 
 
 var routes = require('./routes/index');
