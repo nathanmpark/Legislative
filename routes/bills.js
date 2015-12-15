@@ -36,9 +36,15 @@ router.get('/bill_data', function(req, res) {
     var db = req.db;
     var collection = db.get('bill_list');
     collection.find({},{},function(e,docs){
-        var bill_data = graphData(docs)
-        var d3_format = orgData(bill_data)
-        res.json(d3_format);
+        if(e){
+            console.error(e);
+            res.status(401);
+            res.json({error: e});
+        } else {
+            var bill_data = graphData(docs)
+            var d3_format = orgData(bill_data)
+            res.json(d3_format);
+        }
     });
 
     function graphData(data) {

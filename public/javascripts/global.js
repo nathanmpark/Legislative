@@ -57,6 +57,8 @@ function billKeywords(upcoming_bills) {
                 var committee_list = response.results[0].committee_ids
                 var bill_id = response.results[0].bill_id
                 setCommitteeKeywords(bill_id, committee_list);
+            } else {
+                console.log('Bill not found', request);
             }
         })
     });
