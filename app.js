@@ -8,7 +8,9 @@ var bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var monk = require('monk');
 
-var db = monk('localhost:27017/Legislative');
+var DB_URI = (process.env.MONGOLAB_URI) ? process.env.MONGOLAB_URI : 'mongodb://localhost:27017/Legislative';
+
+var db = monk(DB_URI);
 
 console.log(db)
 
