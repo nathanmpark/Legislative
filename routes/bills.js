@@ -64,8 +64,8 @@ router.get('/bill_data', function(req, res) {
 
         for (var key in bill_data) {
             var bill_obj = {}
-            bill_obj['name'] = key
-            bill_obj['count'] = bill_data[key]
+            bill_obj['label'] = key
+            bill_obj['value'] = bill_data[key]
             d3_array.push(bill_obj)
         }
 
