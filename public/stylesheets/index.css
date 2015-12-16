@@ -1,0 +1,56 @@
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* ********* *//* ********* */
+/* *** CHART CONTAINERS *** */
+.chart-containers {
+  /*border: 2px dotted red;*/
+
+  height: calc(100vh - 60px);
+  margin: 0;
+}
+
+#chart-1-container {
+  padding: 5%;
+
+  background-color: grey;
+}
+
+#chart-2-container {
+
+  background-color: #a2798f;
+}
+
+#chart-3-container {
+
+  background-color: #006699;
+}
+
+#chart-4-container {
+  /*border: 2px dotted red;*/
+
+/*  background-color: #cc0000;*/
+}
+/* ********* *//* ********* */
+/* ********* *//* ********* */
+
+
+
+.details-button-right {
+  /*border: 2px dotted red;*/
+
+  position: relative;
+  float: right;
+}
+
+
+
+#bill-list-container {
+  display: none;
+}
+
+
+

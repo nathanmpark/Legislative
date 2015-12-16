@@ -8,10 +8,20 @@ getBills();
 $(document).ready(function() {
     populate_upcoming_bills();
 
-    $('body').on('click', '#table_congress_list', function(e){
+
+    $('body').scrollspy({ target: '.navbar', offset: 50 });
+    $('a').on('click', function(e){
+        console.log("Stopping Click");
         e.preventDefault();
-        populate_session_bills('113');
-    })
+
+        var hash = this.hash;
+
+        // $('html, body').animate({
+        //     scrollTop: $(hash).offset().top
+        // }, 800, function(){
+        //     window.location.hash = hash;
+        // });
+    });
 });
 
 
