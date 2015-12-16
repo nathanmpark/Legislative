@@ -1,31 +1,65 @@
+//***** GLOBAL JS ******
+
+//---------
+//PRE DOCUMENT-LOAD METHODS
 getBills();
 
+//DOCUMENT READY METHODS
 $(document).ready(function() {
-    populateTable();
+    populate_upcoming_bills();
+
+    $('body').on('click', '#table_congress_list', function(e){
+        e.preventDefault();
+        populate_session_bills('113');
+    })
 });
 
-function populateTable() {
-    var tableContent = '';
 
+//***** FUNCTIONS *****
+function populate_upcoming_bills() {
     $.ajax({
         type: 'GET',
         url: 'https://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
-    }).done(function(response) {
-
-        var bills = response.results
-
-        $.each(bills, function(){
-            tableContent += '<tr>';
-            tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
-            tableContent += '<td>' + (this.context || this.description) + '</td>';
-            tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
-            tableContent += '</tr>';
-        });
-
-        $('#billList table tbody').html(tableContent);
+    }).done(function(response){
+        populateTable(response);
     });
 };
 
+function populate_session_bills(session){
+    var base_url = "https://congress.api.sunlightfoundation.com/";
+    var attributes = "bills?congress=" + session;
+    var api_key = "&apikey=838cd938cfb244a7a5728083f9191152";
+    var full_url = base_url + attributes + api_key;
+
+    $.ajax({
+        type: 'GET',
+        url: full_url
+    }).done(function(response){
+        populateTable(response);
+    });
+};
+
+//Page Populating Methods
+//NOTE: Multi-Use
+function populateTable(api_response) {
+    console.log("Populating Table");
+    console.log(api_response);
+    var tableContent = '';
+    var bills = api_response.results;
+
+    $.each(bills, function(){
+        tableContent += '<tr>';
+        tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
+        tableContent += '<td>' + (this.context || this.description || this.official_title) + '</td>';
+        tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
+        tableContent += '</tr>';
+    });
+
+    $('#billList table tbody').html(tableContent);
+};
+
+
+//
 function getBills() {
     var bill_ids = [];
 
@@ -54,7 +88,7 @@ function billKeywords(upcoming_bills) {
         }).done(function(response){
             var committee_list = response.results[0].committee_ids
             var bill_id = response.results[0].bill_id
-            setCommitteeKeywords(bill_id, committee_list);
+            setCommitteeKeywords(response, committee_list);
         })
     });
 };
@@ -67,7 +101,11 @@ function getCommitteeUrl(committee_id) {
     return 'https://congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 }
 
-function setCommitteeKeywords(bill_id, committee_ids) {
+function setCommitteeKeywords(bill_obj, committee_ids) {
+
+    // console.log("**** BILL OBJECT *****");
+    // console.log(bill_obj);
+
     $.each(committee_ids, function(){
         var request = getCommitteeUrl(this)
 
@@ -76,14 +114,27 @@ function setCommitteeKeywords(bill_id, committee_ids) {
             url: request
         }).done(function(response){
             var bill = {}
-            bill['bill_id'] = bill_id
+            var extractable_bill_obj = bill_obj.results[0];
 
+            //response
             var committee_id = response.results[0].committee_id
             var committee_name = response.results[0].name
-            bill['committee_id'] = committee_id
-            bill['committee_name'] = committee_name
 
-            addBill(bill)
+
+            bill['bill_id'] = extractable_bill_obj.bill_id;
+            bill['committee_id'] = committee_id;
+            bill['committee_name'] = committee_name;
+            bill['congress'] = extractable_bill_obj.congress;
+            bill['chamber'] = extractable_bill_obj.chamber;
+            bill['url_congress'] = extractable_bill_obj.urls.congress;
+            bill['url_govtrack'] = extractable_bill_obj.urls.govtrack;
+            bill['url_opencongress'] = extractable_bill_obj.urls.opencongress;
+            bill['intro_date'] = extractable_bill_obj.introduced_on;
+            bill['last_action_date'] = extractable_bill_obj.last_action_at;
+            bill['last_version_date'] = extractable_bill_obj.last_version_on;
+            bill['history'] = extractable_bill_obj.history;
+
+            addBill(bill);
         })
     });
 }

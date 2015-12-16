@@ -13,16 +13,48 @@ router.post('/add_bill', function(req, res) {
     var db = req.db;
     var collection = db.get('bill_list');
     collection.update(
-    	{'bill_id': req.body.bill_id, 
-    		'committees': 
-    			{'committee_id': req.body.committee_id, 
-    			'committee_name': req.body.committee_name}
+    	{
+        'bill_id': req.body.bill_id,
+        'committees':
+    			{'committee_id': req.body.committee_id,
+    			'committee_name': req.body.committee_name},
+        'congress': req.body.congress,
+        'chamber' : req.body.chamber,
+        'urls':
+            {
+                'congress': req.body.url_congress,
+                'govtrack': req.body.url_govtrack,
+                'opencongress': req.body.url_opencongress
+            },
+        'dates':
+            {
+                'intro_date': req.body.intro_date,
+                'last_action_date': req.body.last_action_date,
+                'last_version_date': req.body.last_version_date
+            },
+        'history': req.body.history
     	},
-    	{'bill_id': req.body.bill_id, 
-    		'committees': 
-    			{'committee_id': req.body.committee_id, 
-    			'committee_name': req.body.committee_name}
-    	}, 
+    	{
+        'bill_id': req.body.bill_id,
+        'committees':
+                {'committee_id': req.body.committee_id,
+                'committee_name': req.body.committee_name},
+        'congress': req.body.congress,
+        'chamber' : req.body.chamber,
+        'urls':
+            {
+                'congress': req.body.url_congress,
+                'govtrack': req.body.url_govtrack,
+                'opencongress': req.body.url_opencongress
+            },
+        'dates':
+            {
+                'intro_date': req.body.intro_date,
+                'last_action_date': req.body.last_action_date,
+                'last_version_date': req.body.last_version_date
+            },
+        'history': req.body.history
+    	},
     	{'upsert': true},
 	    function(err, result){
 	        res.send(
