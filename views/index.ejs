@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,6 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+    <script type='text/javascript', src="http://code.highcharts.com/highcharts.js"></script>
+    <script type='text/javascript', src="http://code.highcharts.com/modules/exporting.js"></script>
 <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
   </head>
   <body>
@@ -16,6 +20,7 @@
 
       <canvas id="myChart" width="600" height="600"></canvas>
       <script>
+
         var ctx = document.getElementById("myChart").getContext("2d");
 
         $.ajax({
@@ -23,7 +28,7 @@
           url: '/bills/bill_data'
         }).done(function(response){
           var bill_data = response;
-          new Chart(ctx).PolarArea(bill_data, {animation:true, animationSteps: 250});
+          new Chart(ctx).PolarArea(bill_data, {animation:true, animationSteps: 250, animateRotate : true, animateScale : true});
         });
       </script>
 
@@ -59,7 +64,7 @@
           }
         ]
       };
-      new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: false});
+      new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: false, barStrokeWidth : 1});
 
     </script>
     </div>
@@ -100,8 +105,49 @@
         ]
       };
       new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true});
+      // window.onload = function(){
+      // var congress = document.getElementById("session_status").getContext("2d");
+      // window.myBarChart = new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true, responsive : true});
+      //     for (i = 0, i < datasets, i++) {
+      //     myBarChart.datasets[i].bars[i].fillColor = getRandomColor(); //bar 1
+      //     // myBarChart.datasets[0].bars[1].fillColor = "orange"; //bar 2
+      //     // myBarChart.datasets[0].bars[2].fillColor = "red"; //bar 3
+      //     myBarChart.update();
+      //   }
+      // }
       // var myBarChart = new Chart(congress).Bar(sessionData, scaleShowHorizontalLines: true);
     </script>
+    </div>
+
+    <div id="container" style="width:100%; height:400px;">
+      <script>
+        $(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4]
+        }, {
+            name: 'John',
+            data: [5, 7, 3]
+        }]
+    });
+});
+      </script>
+
     </div>
   </body>
 </html>
