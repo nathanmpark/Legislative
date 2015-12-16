@@ -1,15 +1,11 @@
-pseudo_code
+Total Bills in the Current Congressional Session
 
-get upcoming bill ids
-make an array of bill ids
-take bill ids
-connect to /bills api
- --> array of detailed bill info
-get list of committees
-map committees to key words
-
-map bill ids to key words
- { bill_id: keywords}
-
-
+Hit the API /bills
+Query the api for the 114th session
+get back all the committee_ids from each bill
+if committee_id = empty array, unassigned-committee
+combine committee_ids to committee_names
+<!-- categorize by chamber -->
+return committee name, and count of bills
+return an array of numbers
 
