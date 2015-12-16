@@ -17,6 +17,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
+
     <!-- Bootstrap JS -->
     <script src="/js/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
@@ -64,8 +65,10 @@
       <div id="billList">
         <table>
           <thead>
-            <th>BillName</th>
-            <th>Description</th>
+            <th>Legislative Date</th>
+            <th>Bill Name</th>
+            <th>Chamber</th>
+            <th>Update</th>
           </thead>
           <tbody></tbody>
         </table>
@@ -402,7 +405,6 @@
                 //   cursor: 'pointer',
                 //   dataLabels
                 // }
-
 
                 title: {
                     text: 'Bills by Committee (Per Session)'

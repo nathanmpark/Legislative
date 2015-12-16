@@ -86,20 +86,22 @@ function getBills() {
     })
 };
 
-function getFloorUpdates(bill_ids) {
-    $.each(bill_ids, function(){
+function getFloorUpdates(bills) {
+    $.each(bills, function(){
         $.ajax({
             type: 'get',
             url: getFloorUpdatesUrl(this)
         }).done(function(response){
-            populateTable
+            console.log("FLOOR UPDATES")
+            console.log(response)
+            populateFloorUpdates(response)
         }).fail(function(error){
             console.log(error)
         });
     });
 };
 
-function populateTable(api_response) {
+function populateFloorUpdates(api_response) {
     console.log("Populating Table");
     console.log(api_response);
     var tableContent = '';
@@ -107,9 +109,10 @@ function populateTable(api_response) {
 
     $.each(bills, function(){
         tableContent += '<tr>';
-        tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
-        tableContent += '<td>' + (this.context || this.description || this.official_title) + '</td>';
-        tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
+        tableContent += '<td>' + this.timestamp + '</td>';
+        tableContent += '<td>' + this.bill_ids[0] + '</td>';
+        tableContent += '<td>' + this.chamber + '</td>';
+        tableContent += '<td>' + this.update + '</td>';
         tableContent += '</tr>';
     });
 
@@ -127,7 +130,7 @@ function getBillDetails(bills) {
                 var committee_list = response.results[0].committee_ids
                 setCommittee(response, committee_list);
             } else {
-                console.log('Bill not found', request);
+                console.log('Bill not found', getBillUrl(this));
             }
         }).fail(function(error){
             console.log(error)

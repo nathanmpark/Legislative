@@ -57,7 +57,7 @@ body {
 
 
 #bill-list-container {
-  display: none;
+  display: block;
 }
 
 #bill-by-committee {
