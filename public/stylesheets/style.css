@@ -71,3 +71,9 @@ fieldset {
 text {
   font: 10px sans-serif;
 }
+
+#bill-by-committee {
+    min-width: 300px;
+    max-width: 600px;
+    margin: 0 auto;
+}
