@@ -10,17 +10,17 @@ $(document).ready(function() {
 
 
     $('body').scrollspy({ target: '.navbar', offset: 50 });
-    $('a').on('click', function(e){
+    $('.chart-link').on('click', function(e){
         console.log("Stopping Click");
         e.preventDefault();
 
         var hash = this.hash;
 
-        // $('html, body').animate({
-        //     scrollTop: $(hash).offset().top
-        // }, 800, function(){
-        //     window.location.hash = hash;
-        // });
+        $('html, body').animate({
+            scrollTop: $(hash).offset().top
+        }, 800, function(){
+            window.location.hash = hash;
+        });
     });
 });
 
@@ -87,7 +87,7 @@ function getBills() {
 };
 
 function getFloorUpdates(bill_ids) {
-    $.each(bills, function(){
+    $.each(bill_ids, function(){
         $.ajax({
             type: 'get',
             url: getFloorUpdatesUrl(this)
@@ -96,7 +96,7 @@ function getFloorUpdates(bill_ids) {
         }).fail(function(error){
             console.log(error)
         });
-    };
+    });
 };
 
 function populateTable(api_response) {

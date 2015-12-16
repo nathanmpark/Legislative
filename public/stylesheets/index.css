@@ -11,10 +11,10 @@ body {
 
   height: calc(100vh - 60px);
   margin: 0;
+  padding: 5%;
 }
 
 #chart-1-container {
-  padding: 5%;
 
   background-color: grey;
 }
@@ -22,6 +22,8 @@ body {
 #chart-2-container {
 
   background-color: #a2798f;
+
+  padding: 0%;
 }
 
 #chart-3-container {
@@ -32,8 +34,14 @@ body {
 #chart-4-container {
   /*border: 2px dotted red;*/
 
-/*  background-color: #cc0000;*/
+  background-color: #a2798f;
 }
+
+#chart-5-container {
+  background-color: #006699;
+}
+
+
 /* ********* *//* ********* */
 /* ********* *//* ********* */
 
@@ -50,6 +58,10 @@ body {
 
 #bill-list-container {
   display: none;
+}
+
+#bill-by-committee {
+  /*border: 2px dotted red;*/
 }
 
 
