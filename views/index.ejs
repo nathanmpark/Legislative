@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
     <title>Legislative</title>
     <link rel="shortcut icon" href="../images/favicon.ico" />
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Other Stylesheets -->
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
@@ -12,12 +23,23 @@
     <script src="https://code.highcharts.com/modules/heatmap.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
   </head>
-  <body>
-    <h1>Legislative</h1>
-    <p>Stay up to date on current bills hitting the house and senate floors</p>
-    <div id="wrapper">
 
-      <!-- ** CHART ** -->
+
+
+
+<!-- ***** BODY CONTENT ***** -->
+  <body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <a class="navbar-brand" href="/">Legislative</a>
+      <a class="navbar-brand" href="#chart-1-container">Chart 1</a>
+      <a class="navbar-brand" href="#chart-2-container">Chart 2</a>
+      <a class="navbar-brand" href="#chart-3-container">Chart 3</a>
+      <a class="navbar-brand" href="#chart-4-container">Chart 4</a>
+    </nav>
+
+    <!-- **** CHART 1 **** -->
+    <div class="chart-containers" id="chart-1-container">
       <canvas id="upcomingBills" width="600" height="600"></canvas>
       <script>
 
@@ -31,7 +53,7 @@
           new Chart(ctx).PolarArea(bill_data, {animation:true, animationSteps: 250, animateRotate : true, animateScale : true});
         });
       </script>
-      <!-- ** END ** -->
+    </div> <!-- '#chart-1-container' -->
 
     <div>
     <h1>Bill in this Congressional Session</h1>
@@ -58,90 +80,118 @@
     </script>
     </div>
 
-    <h1>Active, Pass, Fail status of bills in this Congressional Session</h1>
-    <canvas id="session_status" width="600" height="600"></canvas>
+    <div class="chart-containers" id='chart-2-container' >
+      <h1>Bill in this Congressional Session</h1>
+      <canvas id="current_session" width="600" height="600"></canvas>
 
-    <script>
-      var congress = document.getElementById("session_status").getContext("2d");
-
-      var sessionData = {
-        labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
-        datasets: [
-          {
-            label: "Active",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 90]
-          },
-          {
-            label: "Passed",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 40]
-          },
-                    {
-            label: "Dead",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
-            data: [28, 18, 10, 29, 46, 57, 50]
-          }
-        ]
-      };
-      new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true});
-      // window.onload = function(){
-      // var congress = document.getElementById("session_status").getContext("2d");
-      // window.myBarChart = new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true, responsive : true});
-      //     for (i = 0, i < datasets, i++) {
-      //     myBarChart.datasets[i].bars[i].fillColor = getRandomColor(); //bar 1
-      //     // myBarChart.datasets[0].bars[1].fillColor = "orange"; //bar 2
-      //     // myBarChart.datasets[0].bars[2].fillColor = "red"; //bar 3
-      //     myBarChart.update();
-      //   }
-      // }
-      // var myBarChart = new Chart(congress).Bar(sessionData, scaleShowHorizontalLines: true);
-    </script>
-    </div>
-
-    <div id="session" style="width:100%; height:400px;">
       <script>
-        $(function () {
-    $('#session').highcharts({
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Active, Pass, Fail status of bills in this Congressional Session'
-        },
-        xAxis: {
-            categories: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"]
-        },
-        yAxis: {
-            title: {
-                text: 'Status'
-            }
-        },
-        series: [{
-            name: 'Active',
-            data: [5, 7, 3]
-        }, {
-            name: 'Pass',
-            data: [2,3,1]
-        }, {
-            name: 'Fail',
-            data: [1, 0, 2]
-        }]
-    });
-});
-      </script>
+        var congress = document.getElementById("current_session").getContext("2d");
 
+        var sessionData = {
+          labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
+          datasets: [
+            {
+              label: "Active",
+              fillColor: "rgba(220,220,220,0.5)",
+              strokeColor: "rgba(220,220,220,0.8)",
+              highlightFill: "rgba(220,220,220,0.75)",
+              highlightStroke: "rgba(220,220,220,1)",
+              data: [65, 59, 80, 81, 56, 55, 90]
+            }
+          ]
+        };
+        new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: false, barStrokeWidth : 1});
+
+      </script>
     </div>
 
+    <div class="chart-containers" id='chart-3-container'>
+      <h1 class="lead">Active, Pass, Fail status of bills in this Congressional Session</h1>
+      <canvas id="session_status" width="600" height="600"></canvas>
+
+      <script>
+        var congress = document.getElementById("session_status").getContext("2d");
+
+        var sessionData = {
+          labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
+          datasets: [
+            {
+              label: "Active",
+              fillColor: "rgba(220,220,220,0.5)",
+              strokeColor: "rgba(220,220,220,0.8)",
+              highlightFill: "rgba(220,220,220,0.75)",
+              highlightStroke: "rgba(220,220,220,1)",
+              data: [65, 59, 80, 81, 56, 55, 90]
+            },
+            {
+              label: "Passed",
+              fillColor: "rgba(151,187,205,0.5)",
+              strokeColor: "rgba(151,187,205,0.8)",
+              highlightFill: "rgba(151,187,205,0.75)",
+              highlightStroke: "rgba(151,187,205,1)",
+              data: [28, 48, 40, 19, 86, 27, 40]
+            },
+                      {
+              label: "Dead",
+              fillColor: "rgba(151,187,205,0.5)",
+              strokeColor: "rgba(151,187,205,0.8)",
+              highlightFill: "rgba(151,187,205,0.75)",
+              highlightStroke: "rgba(151,187,205,1)",
+              data: [28, 18, 10, 29, 46, 57, 50]
+            }
+          ]
+        };
+        new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true});
+        // window.onload = function(){
+        // var congress = document.getElementById("session_status").getContext("2d");
+        // window.myBarChart = new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true, responsive : true});
+        //     for (i = 0, i < datasets, i++) {
+        //     myBarChart.datasets[i].bars[i].fillColor = getRandomColor(); //bar 1
+        //     // myBarChart.datasets[0].bars[1].fillColor = "orange"; //bar 2
+        //     // myBarChart.datasets[0].bars[2].fillColor = "red"; //bar 3
+        //     myBarChart.update();
+        //   }
+        // }
+        // var myBarChart = new Chart(congress).Bar(sessionData, scaleShowHorizontalLines: true);
+      </script>
+    </div>
+
+    <div class="chart-containers" id='chart-4-container'>
+      <div id="session" style="width:100%; height:400px;">
+        <script>
+          $(function () {
+            $('#session').highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Active, Pass, Fail status of bills in this Congressional Session'
+                },
+                xAxis: {
+                    categories: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Status'
+                    }
+                },
+                series: [{
+                    name: 'Active',
+                    data: [5, 7, 3]
+                }, {
+                    name: 'Pass',
+                    data: [2,3,1]
+                }, {
+                    name: 'Fail',
+                    data: [1, 0, 2]
+                }]
+            });
+          });
+        </script>
+
+      </div>
+    </div> <!-- #chart-4-container END -->
+    
 <!-- start code on expandHighCharts branch -->
   <div id="houseVsSenate" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
   <script>
@@ -423,6 +473,7 @@
 </script>
 </div>
 
+>>>>>>> master
 
   </body>
 </html>

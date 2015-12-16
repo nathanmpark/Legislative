@@ -9,3 +9,5 @@ combine committee_ids to committee_names
 return committee name, and count of bills
 return an array of numbers
 
+Incorporate javacsript in separate script tags in head instead of in body
+

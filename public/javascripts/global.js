@@ -8,6 +8,20 @@ getBills();
 $(document).ready(function() {
     getUpcomingBills();
 
+
+    $('body').scrollspy({ target: '.navbar', offset: 50 });
+    $('a').on('click', function(e){
+        console.log("Stopping Click");
+        e.preventDefault();
+
+        var hash = this.hash;
+
+        // $('html, body').animate({
+        //     scrollTop: $(hash).offset().top
+        // }, 800, function(){
+        //     window.location.hash = hash;
+        // });
+    });
 });
 
 //***** FUNCTIONS *****
