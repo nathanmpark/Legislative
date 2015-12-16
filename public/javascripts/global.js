@@ -94,7 +94,9 @@ function setCommitteeKeywords(bill_id, committee_ids) {
             bill['committee_name'] = committee_name
 
             addBill(bill)
-        })
+        }).fail(function(error){
+            console.log(error)
+        });
     });
 }
 
