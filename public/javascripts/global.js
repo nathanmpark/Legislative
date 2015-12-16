@@ -41,6 +41,10 @@ function getUpcomingUrl(){
     return 'https://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152';
 }
 
+function getFloorUpdatesUrl(bill_id){
+    return 'https://congress.api.sunlightfoundation.com/floor_updates?bill_ids=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+}
+
 function getUpcomingBills() {
     $.ajax({
         type: 'GET',
@@ -74,11 +78,42 @@ function getBills() {
         $.each(bills, function(){
             bill_ids.push(this.bill_id)
         });
+        getFloorUpdates(bill_ids)
         // billCommittees is in the .done due to the asynchronous nature of Javascript
         getBillDetails(bill_ids)
     }).fail(function(error){
         console.log(error)
     })
+};
+
+function getFloorUpdates(bill_ids) {
+    $.each(bills, function(){
+        $.ajax({
+            type: 'get',
+            url: getFloorUpdatesUrl(this)
+        }).done(function(response){
+            populateTable
+        }).fail(function(error){
+            console.log(error)
+        });
+    };
+};
+
+function populateTable(api_response) {
+    console.log("Populating Table");
+    console.log(api_response);
+    var tableContent = '';
+    var bills = api_response.results;
+
+    $.each(bills, function(){
+        tableContent += '<tr>';
+        tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
+        tableContent += '<td>' + (this.context || this.description || this.official_title) + '</td>';
+        tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
+        tableContent += '</tr>';
+    });
+
+    $('#billList table tbody').html(tableContent);
 };
 
 function getBillDetails(bills) {
@@ -99,7 +134,6 @@ function getBillDetails(bills) {
         })
     });
 };
-
 
 function setCommittee(bill_obj, committee_ids) {
 

@@ -55,29 +55,18 @@
       </script>
     </div> <!-- '#chart-1-container' -->
 
-    <div>
-    <h1>Bill in this Congressional Session</h1>
-    <canvas id="current_session" width="600" height="600"></canvas>
-
-    <script>
-      var congress = document.getElementById("current_session").getContext("2d");
-
-      var sessionData = {
-        labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
-        datasets: [
-          {
-            label: "Active",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 90]
-          }
-        ]
-      };
-      new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: false, barStrokeWidth : 1});
-
-    </script>
+    <!-- Floor Updates Feed -->
+    <div id='bill-list-container'>
+      <h2>Floor Updates</h2>
+      <div id="billList">
+        <table>
+          <thead>
+            <th>BillName</th>
+            <th>Description</th>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
 
     <div class="chart-containers" id='chart-2-container' >
@@ -102,57 +91,6 @@
         };
         new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: false, barStrokeWidth : 1});
 
-      </script>
-    </div>
-
-    <div class="chart-containers" id='chart-3-container'>
-      <h1 class="lead">Active, Pass, Fail status of bills in this Congressional Session</h1>
-      <canvas id="session_status" width="600" height="600"></canvas>
-
-      <script>
-        var congress = document.getElementById("session_status").getContext("2d");
-
-        var sessionData = {
-          labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
-          datasets: [
-            {
-              label: "Active",
-              fillColor: "rgba(220,220,220,0.5)",
-              strokeColor: "rgba(220,220,220,0.8)",
-              highlightFill: "rgba(220,220,220,0.75)",
-              highlightStroke: "rgba(220,220,220,1)",
-              data: [65, 59, 80, 81, 56, 55, 90]
-            },
-            {
-              label: "Passed",
-              fillColor: "rgba(151,187,205,0.5)",
-              strokeColor: "rgba(151,187,205,0.8)",
-              highlightFill: "rgba(151,187,205,0.75)",
-              highlightStroke: "rgba(151,187,205,1)",
-              data: [28, 48, 40, 19, 86, 27, 40]
-            },
-                      {
-              label: "Dead",
-              fillColor: "rgba(151,187,205,0.5)",
-              strokeColor: "rgba(151,187,205,0.8)",
-              highlightFill: "rgba(151,187,205,0.75)",
-              highlightStroke: "rgba(151,187,205,1)",
-              data: [28, 18, 10, 29, 46, 57, 50]
-            }
-          ]
-        };
-        new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true});
-        // window.onload = function(){
-        // var congress = document.getElementById("session_status").getContext("2d");
-        // window.myBarChart = new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: true, responsive : true});
-        //     for (i = 0, i < datasets, i++) {
-        //     myBarChart.datasets[i].bars[i].fillColor = getRandomColor(); //bar 1
-        //     // myBarChart.datasets[0].bars[1].fillColor = "orange"; //bar 2
-        //     // myBarChart.datasets[0].bars[2].fillColor = "red"; //bar 3
-        //     myBarChart.update();
-        //   }
-        // }
-        // var myBarChart = new Chart(congress).Bar(sessionData, scaleShowHorizontalLines: true);
       </script>
     </div>
 
