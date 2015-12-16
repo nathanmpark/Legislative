@@ -54,7 +54,7 @@ function billKeywords(upcoming_bills) {
         }).done(function(response){
             var committee_list = response.results[0].committee_ids
             var bill_id = response.results[0].bill_id
-            setCommitteeKeywords(bill_id, committee_list);
+            setCommitteeKeywords(response, committee_list);
         })
     });
 };
@@ -67,7 +67,11 @@ function getCommitteeUrl(committee_id) {
     return 'https://congress.api.sunlightfoundation.com/committees?committee_id=' + committee_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 }
 
-function setCommitteeKeywords(bill_id, committee_ids) {
+function setCommitteeKeywords(bill_obj, committee_ids) {
+
+    console.log("**** BILL OBJECT *****");
+    console.log(bill_obj);
+
     $.each(committee_ids, function(){
         var request = getCommitteeUrl(this)
 
@@ -76,13 +80,27 @@ function setCommitteeKeywords(bill_id, committee_ids) {
             url: request
         }).done(function(response){
             var bill = {}
-            bill['bill_id'] = bill_id
+            var extractable_bill_obj = bill_obj.results[0];
 
+            //response
             var committee_id = response.results[0].committee_id
             var committee_name = response.results[0].name
-            bill['committee_id'] = committee_id
-            bill['committee_name'] = committee_name
 
+
+            bill['bill_id'] = extractable_bill_obj.bill_id;
+            bill['committee_id'] = committee_id;
+            bill['committee_name'] = committee_name;
+            bill['congress'] = extractable_bill_obj.congress;
+            bill['chamber'] = extractable_bill_obj.chamber;
+            bill['url_congress'] = extractable_bill_obj.urls.congress;
+            bill['url_govtrack'] = extractable_bill_obj.urls.govtrack;
+            bill['url_opencongress'] = extractable_bill_obj.urls.opencongress;
+            bill['intro_date'] = extractable_bill_obj.introduced_on;
+            bill['last_action_date'] = extractable_bill_obj.last_action_at;
+            bill['last_version_date'] = extractable_bill_obj.last_version_on;
+            bill['history'] = extractable_bill_obj.history;
+
+            console.log(bill);
             addBill(bill)
         })
     });
