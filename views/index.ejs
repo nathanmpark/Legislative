@@ -243,103 +243,102 @@
     var data = {
             'Aging': {
                 'Bill to help old people like Mary': {
-                    'Communicable & other Group I': '75.5',
-                    'Injuries': '89.0',
-                    'Noncommunicable diseases': '501.2'
+                    "url": '673',
+                    "Description": '75.5',
+                    // 'IDforBill': '89.0',
                 },
                 'The Mitochondrial Free Radical Theory of Aging': {
-                    'Noncommunicable diseases': '548.9',
-                    'Injuries': '64.0',
-                    'Communicable & other Group I': '234.6'
+                    "url": '73',
+                    "Description": '234.6'
+                    // 'IDforBill': '64.0',
                 },
                 ' Rejuvenation Research': {
-                    'Communicable & other Group I': '316.4',
-                    'Injuries': '102.0',
-                    'Noncommunicable diseases': '708.7'
+                    "url": '73',
+                    "Description": '316.4',
+                    // 'IDforBill': '102.0',
                 },
                 'Aubrey de Grey': {
-                    'Injuries': '35.0',
-                    'Noncommunicable diseases': '487.2',
-                    'Communicable & other Group I': '59.2'
+                    "url": '73',
+                    "Description": '59.2'
+                    // 'IDforBill': '35.0',
                 },
                 'SENS Research Foundation': {
-                    'Injuries': '91.9',
-                    'Noncommunicable diseases': '751.4',
-                    'Communicable & other Group I': '117.3'
+                    "url": '73',
+                    "Description": '117.3'
+                    // 'IDforBill': '91.9',
                 },
 
             },
             'Small Business': {
                 'Awesome bill to help small business owners': {
-                    'Communicable & other Group I': '16.8',
-                    'Noncommunicable diseases': '602.8',
-                    'Injuries': '44.3'
+                    "url": '73',
+                    "Description": '16.8',
+                    // 'IDforBill': '44.3'
                 },
                 'Another bill to help SM get health care': {
-                    'Communicable & other Group I': '22.6',
-                    'Noncommunicable diseases': '494.5',
-                    'Injuries': '48.9'
+                    "url": '73',
+                    "Description": '22.6',
+                    // 'IDforBill': '48.9'
                 },
             },
 
         },
         points = [],
-        regionP,
-        regionVal,
-        regionI = 0,
-        countryP,
-        countryI,
+        committeeP,
+        committeeVal,
+        committeeI = 0,
+        indvBillsP,
+        indvBillsI,
         causeP,
         causeI,
-        region,
-        country,
+        committee,
+        indvBills,
         cause,
         causeName = {
-            'Bill ID': 'Communicable diseases',
-            'Noncommunicable diseases': 'Non-communicable diseases',
-            'url': 'link to gov site'
+            "url": "<a href='#'>Click for bill details'</a>",
+            'Description': 'Bill details'
+            // 'IDforBill': 'Bill id'
+
 
         };
 
-    for (region in data) {
-        if (data.hasOwnProperty(region)) {
-            regionVal = 0;
-            regionP = {
-                // description: "blaaaaah",
-                // url: "www.poik.com",
-                id: 'id_' + regionI,
-                name: region,
-                color: Highcharts.getOptions().colors[regionI]
+    for (committee in data) {
+        if (data.hasOwnProperty(committee)) {
+            committeeVal = 0;
+            committeeP = {
+                id: 'id_' + committeeI,
+                name: committee,
+                color: Highcharts.getOptions().colors[committeeI]
             };
-            countryI = 0;
-            for (country in data[region]) {
-                if (data[region].hasOwnProperty(country)) {
-                    countryP = {
-                        id: regionP.id + '_' + countryI,
-                        name: country,
-                        parent: regionP.id
+            indvBillsI = 0;
+            for (indvBills in data[committee]) {
+                if (data[committee].hasOwnProperty(indvBills)) {
+                    indvBillsP = {
+                        id: committeeP.id + '_' + indvBillsI,
+                        name: indvBills,
+                        parent: committeeP.id
                     };
-                    points.push(countryP);
+                    points.push(indvBillsP);
                     causeI = 0;
-                    for (cause in data[region][country]) {
-                        if (data[region][country].hasOwnProperty(cause)) {
+                    for (cause in data[committee][indvBills]) {
+                        if (data[committee][indvBills].hasOwnProperty(cause)) {
                             causeP = {
-                                id: countryP.id + '_' + causeI,
+                                id: indvBillsP.id + '_' + causeI,
                                 name: causeName[cause],
-                                parent: countryP.id,
-                                value: Math.round(+data[region][country][cause])
+                                parent: indvBillsP.id,
+                                value: Math.round(+data[committee][indvBills][cause])
                             };
-                            regionVal += causeP.value;
+                            committeeVal += causeP.value;
                             points.push(causeP);
                             causeI = causeI + 1;
                         }
                     }
-                    countryI = countryI + 1;
+                    indvBillsI = indvBillsI + 1;
                 }
             }
-            regionP.value = Math.round(regionVal / countryI);
-            points.push(regionP);
-            regionI = regionI + 1;
+            committeeP.value = Math.round(committeeVal / indvBillsI);
+            points.push(committeeP);
+            committeeI = committeeI + 1;
         }
     }
     $('#bill-by-committee').highcharts({
@@ -355,13 +354,76 @@
                 level: 1,
                 layoutAlgorithm: 'stripes',
                 color: 'red',
+                // point: {
+                //   click: function(){
+                //     var someURL = this.series.userOptions.URLs[this.x];
+                //     if (someURL)
+                //       window.open('')
+                //   }
+                // }
+                // plotOptions: {
+                //     allowPointSelect: true,
+                    // cursor: 'pointer',
+                    // dataLabels {
+                    //   enabled: true
+                    // }
+                //     events:{
+                //       click: function (event) {
+                //         alert(event.point.name);
+                //         // add your redirect code and u can get data using event.point
+                //           console.log('The click is working!')
+
+                //       }
+                //     }
+
+                    // useHTML: true
+                    // formatter: function(){
+                    //   return '<div class="bill-link">' + this.level.name + '</div>';
+                    // }
+
+
+
+
+                  // }
                 dataLabels: {
                     enabled: true
+
+                    // useHTML: true
+                    // formatter: function(){
+                    //   return '<div class="bill-link">' + this.level.name + '</div>';
+                    // }
+
+                    // events:{
+                    //     click: function (event) {
+                    //                alert(event.point.name);
+                    //             // add your redirect code and u can get data using event.point
+                    //     }
+                    // }
+
+
+
                 },
                 borderWidth: 3
+
+                // point: {
+                //   events: {
+                //     click: function(e) {
+                //       //this.slice();
+                //       //console.log(e);
+                //       location.href = e.point.url;
+                //       e.preventDefault();
+                //     }
+                //   }
+                // },
+
             }],
             data: points
         }],
+        // plotOptions: {
+        //   allowPointSelect: true,
+        //   cursor: 'pointer',
+        //   dataLabels
+        // }
 
 
         title: {
@@ -369,6 +431,11 @@
         }
     });
 });
+
+// $(".bill-link").on('click', function(){
+//   console.log('The click is working!')
+// })
+
 </script>
 </div>
 
