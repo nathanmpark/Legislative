@@ -5,13 +5,20 @@ router.get('/bill_list', function(req, res) {
     var db = req.db;
     var collection = db.get('bill_list');
     collection.find({},{},function(e,docs){
-        res.json(docs);
+        if (e){
+            console.error("failed!", e);
+            res.status(500).send('Failed to get bill list');
+        } else {
+            res.json(docs);
+        }
+        // res.json(docs);
     });
 });
 
 router.post('/add_bill', function(req, res) {
     var db = req.db;
     var collection = db.get('bill_list');
+    console.log("Add Bill Request Body: ",req.body);
     collection.update(
     	{
         'bill_id': req.body.bill_id,
@@ -57,6 +64,8 @@ router.post('/add_bill', function(req, res) {
     	},
     	{'upsert': true},
 	    function(err, result){
+            if(err){console.error("add bill error", err);}
+            if(result){console.log("add bill result", result);}
 	        res.send(
 	            (err === null) ? { msg: '' } : { msg: err }
 	        );
@@ -68,20 +77,30 @@ router.get('/bill_data', function(req, res) {
     var db = req.db;
     var collection = db.get('bill_list');
     collection.find({},{},function(e,docs){
-        var bill_data = graphData(docs)
-        var d3_format = orgData(bill_data)
-        res.json(d3_format);
+        if(e){
+            console.error(e);
+            res.status(401);
+            res.json({error: e});
+        } else {
+            var bill_data = graphData(docs)
+            var d3_format = orgData(bill_data)
+            res.json(d3_format);
+        }
     });
 
     function graphData(data) {
         var bill_data = {}
-        for (var i = 0; i < data.length; i++) {
-            var committee_name = data[i].committees.committee_name
-            if (bill_data.hasOwnProperty(committee_name)){
-                bill_data[committee_name]++;
-            } else {
-                bill_data[committee_name] = 1;
-            };
+        if(data){
+            for (var i = 0; i < data.length; i++) {
+                var committee_name = data[i].committees.committee_name
+                if (bill_data.hasOwnProperty(committee_name)){
+                    bill_data[committee_name]++;
+                } else {
+                    bill_data[committee_name] = 1;
+                };
+            }
+        } else {
+            console.error('No data in graphData()');
         }
         return bill_data
     };
