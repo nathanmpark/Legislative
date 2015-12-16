@@ -122,30 +122,33 @@
     </script>
     </div>
 
-    <div id="container" style="width:100%; height:400px;">
+    <div id="session" style="width:100%; height:400px;">
       <script>
         $(function () {
-    $('#container').highcharts({
+    $('#session').highcharts({
         chart: {
             type: 'bar'
         },
         title: {
-            text: 'Fruit Consumption'
+            text: 'Active, Pass, Fail status of bills in this Congressional Session'
         },
         xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
+            categories: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"]
         },
         yAxis: {
             title: {
-                text: 'Fruit eaten'
+                text: 'Status'
             }
         },
         series: [{
-            name: 'Jane',
-            data: [1, 0, 4]
-        }, {
-            name: 'John',
+            name: 'Active',
             data: [5, 7, 3]
+        }, {
+            name: 'Pass',
+            data: [2,3,1]
+        }, {
+            name: 'Fail',
+            data: [1, 0, 2]
         }]
     });
 });
