@@ -1,29 +1,41 @@
+//***** GLOBAL JS ******
+
+//---------
+//PRE DOCUMENT-LOAD METHODS
 getBills();
 
+//DOCUMENT READY METHODS
 $(document).ready(function() {
-    populateTable();
+    populate_upcoming_bills();
 });
 
-function populateTable() {
-    var tableContent = '';
 
+//***** FUNCTIONS *****
+function populate_upcoming_bills() {
     $.ajax({
         type: 'GET',
         url: 'https://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152'
-    }).done(function(response) {
-
-        var bills = response.results
-
-        $.each(bills, function(){
-            tableContent += '<tr>';
-            tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
-            tableContent += '<td>' + (this.context || this.description) + '</td>';
-            tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
-            tableContent += '</tr>';
-        });
-
-        $('#billList table tbody').html(tableContent);
+    }).done(function(response){
+        populateTable(response);
     });
+};
+
+//Page Populating Methods
+//NOTE: Multi-Use
+function populateTable(api_response) {
+    console.log("Populating Table");
+    var tableContent = '';
+    var bills = api_response.results;
+
+    $.each(bills, function(){
+        tableContent += '<tr>';
+        tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
+        tableContent += '<td>' + (this.context || this.description) + '</td>';
+        tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
+        tableContent += '</tr>';
+    });
+
+    $('#billList table tbody').html(tableContent);
 };
 
 function getBills() {
@@ -69,8 +81,8 @@ function getCommitteeUrl(committee_id) {
 
 function setCommitteeKeywords(bill_obj, committee_ids) {
 
-    console.log("**** BILL OBJECT *****");
-    console.log(bill_obj);
+    // console.log("**** BILL OBJECT *****");
+    // console.log(bill_obj);
 
     $.each(committee_ids, function(){
         var request = getCommitteeUrl(this)
@@ -100,8 +112,7 @@ function setCommitteeKeywords(bill_obj, committee_ids) {
             bill['last_version_date'] = extractable_bill_obj.last_version_on;
             bill['history'] = extractable_bill_obj.history;
 
-            console.log(bill);
-            addBill(bill)
+            addBill(bill);
         })
     });
 }
