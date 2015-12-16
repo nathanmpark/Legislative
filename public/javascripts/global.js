@@ -139,7 +139,6 @@ function getBillDetails(bills) {
 };
 
 function setCommittee(bill_obj, committee_ids) {
-
     $.each(committee_ids, function(){
         var request = getCommitteeUrl(this)
 
