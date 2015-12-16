@@ -35,10 +35,11 @@
 
     <nav class="navbar navbar-default navbar-fixed-top">
       <a class="navbar-brand" href="/">Legislative</a>
-      <a class="navbar-brand" href="#chart-1-container">Chart 1</a>
-      <a class="navbar-brand" href="#chart-2-container">Chart 2</a>
-      <a class="navbar-brand" href="#chart-3-container">Chart 3</a>
-      <a class="navbar-brand" href="#chart-4-container">Chart 4</a>
+      <a class="navbar-brand chart-link" href="#chart-1-container">Chart 1</a>
+      <a class="navbar-brand chart-link" href="#chart-2-container">Chart 2</a>
+      <a class="navbar-brand chart-link" href="#chart-3-container">Chart 3</a>
+      <a class="navbar-brand chart-link" href="#chart-4-container">Chart 4</a>
+      <a class="navbar-brand chart-link" href="#chart-5-container">Chart 5</a>
     </nav>
 
     <!-- **** CHART 1 **** -->
@@ -99,7 +100,7 @@
       </script>
     </div>
 
-    <div class="chart-containers" id='chart-4-container'>
+    <div class="chart-containers" id='chart-3-container'>
       <div id="session" style="width:100%; height:400px;">
         <script>
           $(function () {
@@ -133,287 +134,296 @@
         </script>
 
       </div>
-    </div> <!-- #chart-4-container END -->
-    
+    </div> <!-- #chart-3-container END -->
+
 <!-- start code on expandHighCharts branch -->
-  <div id="houseVsSenate" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-  <script>
-  $(function () {
 
-    var categories = ['Agriculture', 'DARPA', 'Education', 'Defense',
-            'Water', 'Climate Change', 'Foreign Relations', 'Immigration', 'Veteran Affairs',
-            'Defunding Saskatoon ', 'Appropriations', 'Ethics', 'Judiciary', 'Rules',
-            'Budget', 'Small Business', 'Ways & Means', 'Homeland Security', 'Environment and Public Works',
-            'Energy and National Resources', 'Science, Space, & Tech'];
-    $(document).ready(function () {
-        $('#houseVsSenate').highcharts({
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: 'House vs. Senate'
-            },
-            // subtitle: {
-            //     text: 'Source: <a href="http://populationpyramid.net/germany/2015/">Population Pyramids of the World from 1950 to 2100</a>'
-            // },
-            xAxis: [{
-                categories: categories,
-                reversed: false,
-                labels: {
-                    step: 1
-                }
-            }, { // mirror axis on right side
-                opposite: true,
-                reversed: false,
-                categories: categories,
-                linkedTo: 0,
-                labels: {
-                    step: 1
-                }
-            }],
-            yAxis: {
+    <div class="chart-containers" id='chart-4-container'>
+      <div id="houseVsSenate" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+      <script>
+      $(function () {
+
+        var categories = ['Agriculture', 'DARPA', 'Education', 'Defense',
+                'Water', 'Climate Change', 'Foreign Relations', 'Immigration', 'Veteran Affairs',
+                'Defunding Saskatoon ', 'Appropriations', 'Ethics', 'Judiciary', 'Rules',
+                'Budget', 'Small Business', 'Ways & Means', 'Homeland Security', 'Environment and Public Works',
+                'Energy and National Resources', 'Science, Space, & Tech'];
+        $(document).ready(function () {
+            $('#houseVsSenate').highcharts({
+                chart: {
+                    type: 'bar'
+                },
                 title: {
-                    text: 'Committees'
+                    text: 'House vs. Senate'
                 },
-                labels: {
-                    formatter: function () {
-
-                        return Math.abs(this.value);
+                // subtitle: {
+                //     text: 'Source: <a href="http://populationpyramid.net/germany/2015/">Population Pyramids of the World from 1950 to 2100</a>'
+                // },
+                xAxis: [{
+                    categories: categories,
+                    reversed: false,
+                    labels: {
+                        step: 1
                     }
-                }
-            },
+                }, { // mirror axis on right side
+                    opposite: true,
+                    reversed: false,
+                    categories: categories,
+                    linkedTo: 0,
+                    labels: {
+                        step: 1
+                    }
+                }],
+                yAxis: {
+                    title: {
+                        text: 'Committees'
+                    },
+                    labels: {
+                        formatter: function () {
 
-            plotOptions: {
-                series: {
-                    stacking: 'normal'
-                }
-            },
-
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
-                        'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
-                }
-            },
-
-            series: [{
-                name: 'House',
-                data: [-2.2, -2.2, -2.3, -2.5, -2.7, -3.1, -3.2,
-                    -3.0, -3.2, -4.3, -4.4, -3.6, -3.1, -2.4,
-                    -2.5, -2.3, -1.2, -0.6, -0.2, -0.0, -0.0]
-            }, {
-                name: 'Senate',
-                data: [2.1, 2.0, 2.2, 2.4, 2.6, 3.0, 3.1, 2.9,
-                    3.1, 4.1, 4.3, 3.6, 3.4, 2.6, 2.9, 2.9,
-                    1.8, 1.2, 0.6, 0.1, 0.0]
-            }]
-        });
-    });
-
-});
-</script>
-
-<div id="bill-by-committee">
-
-<script>
-  $(function () {
-    var data = {
-            'Aging': {
-                'Bill to help old people like Mary': {
-                    "url": '673',
-                    "Description": '75.5',
-                    // 'IDforBill': '89.0',
-                },
-                'The Mitochondrial Free Radical Theory of Aging': {
-                    "url": '73',
-                    "Description": '234.6'
-                    // 'IDforBill': '64.0',
-                },
-                ' Rejuvenation Research': {
-                    "url": '73',
-                    "Description": '316.4',
-                    // 'IDforBill': '102.0',
-                },
-                'Aubrey de Grey': {
-                    "url": '73',
-                    "Description": '59.2'
-                    // 'IDforBill': '35.0',
-                },
-                'SENS Research Foundation': {
-                    "url": '73',
-                    "Description": '117.3'
-                    // 'IDforBill': '91.9',
-                },
-
-            },
-            'Small Business': {
-                'Awesome bill to help small business owners': {
-                    "url": '73',
-                    "Description": '16.8',
-                    // 'IDforBill': '44.3'
-                },
-                'Another bill to help SM get health care': {
-                    "url": '73',
-                    "Description": '22.6',
-                    // 'IDforBill': '48.9'
-                },
-            },
-
-        },
-        points = [],
-        committeeP,
-        committeeVal,
-        committeeI = 0,
-        indvBillsP,
-        indvBillsI,
-        causeP,
-        causeI,
-        committee,
-        indvBills,
-        cause,
-        causeName = {
-            "url": "<a href='#'>Click for bill details'</a>",
-            'Description': 'Bill details'
-            // 'IDforBill': 'Bill id'
-
-
-        };
-
-    for (committee in data) {
-        if (data.hasOwnProperty(committee)) {
-            committeeVal = 0;
-            committeeP = {
-                id: 'id_' + committeeI,
-                name: committee,
-                color: Highcharts.getOptions().colors[committeeI]
-            };
-            indvBillsI = 0;
-            for (indvBills in data[committee]) {
-                if (data[committee].hasOwnProperty(indvBills)) {
-                    indvBillsP = {
-                        id: committeeP.id + '_' + indvBillsI,
-                        name: indvBills,
-                        parent: committeeP.id
-                    };
-                    points.push(indvBillsP);
-                    causeI = 0;
-                    for (cause in data[committee][indvBills]) {
-                        if (data[committee][indvBills].hasOwnProperty(cause)) {
-                            causeP = {
-                                id: indvBillsP.id + '_' + causeI,
-                                name: causeName[cause],
-                                parent: indvBillsP.id,
-                                value: Math.round(+data[committee][indvBills][cause])
-                            };
-                            committeeVal += causeP.value;
-                            points.push(causeP);
-                            causeI = causeI + 1;
+                            return Math.abs(this.value);
                         }
                     }
-                    indvBillsI = indvBillsI + 1;
-                }
-            }
-            committeeP.value = Math.round(committeeVal / indvBillsI);
-            points.push(committeeP);
-            committeeI = committeeI + 1;
-        }
-    }
-    $('#bill-by-committee').highcharts({
-        series: [{
-            type: 'treemap',
-            layoutAlgorithm: 'squarified',
-            allowDrillToNode: true,
-            dataLabels: {
-                enabled: false
-            },
-            levelIsConstant: false,
-            levels: [{
-                level: 1,
-                layoutAlgorithm: 'stripes',
-                color: 'red',
-                // point: {
-                //   click: function(){
-                //     var someURL = this.series.userOptions.URLs[this.x];
-                //     if (someURL)
-                //       window.open('')
-                //   }
-                // }
-                // plotOptions: {
-                //     allowPointSelect: true,
-                    // cursor: 'pointer',
-                    // dataLabels {
-                    //   enabled: true
-                    // }
-                //     events:{
-                //       click: function (event) {
-                //         alert(event.point.name);
-                //         // add your redirect code and u can get data using event.point
-                //           console.log('The click is working!')
+                },
 
-                //       }
-                //     }
+                plotOptions: {
+                    series: {
+                        stacking: 'normal'
+                    }
+                },
 
-                    // useHTML: true
-                    // formatter: function(){
-                    //   return '<div class="bill-link">' + this.level.name + '</div>';
-                    // }
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                            'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+                    }
+                },
 
+                series: [{
+                    name: 'House',
+                    data: [-2.2, -2.2, -2.3, -2.5, -2.7, -3.1, -3.2,
+                        -3.0, -3.2, -4.3, -4.4, -3.6, -3.1, -2.4,
+                        -2.5, -2.3, -1.2, -0.6, -0.2, -0.0, -0.0]
+                }, {
+                    name: 'Senate',
+                    data: [2.1, 2.0, 2.2, 2.4, 2.6, 3.0, 3.1, 2.9,
+                        3.1, 4.1, 4.3, 3.6, 3.4, 2.6, 2.9, 2.9,
+                        1.8, 1.2, 0.6, 0.1, 0.0]
+                    }]
+                });
+            });
 
+        });
+        </script>
+    </div> <!-- #chart-4-container END -->
 
+    <div class="chart-containers" id='chart-5-container'>
+        <div id="bill-by-committee">
+        <script>
+          $(function () {
+            var data = {
+                    'Aging': {
+                        'Bill to help old people like Mary': {
+                            "url": '673',
+                            "Description": '75.5',
+                            // 'IDforBill': '89.0',
+                        },
+                        'The Mitochondrial Free Radical Theory of Aging': {
+                            "url": '73',
+                            "Description": '234.6'
+                            // 'IDforBill': '64.0',
+                        },
+                        ' Rejuvenation Research': {
+                            "url": '73',
+                            "Description": '316.4',
+                            // 'IDforBill': '102.0',
+                        },
+                        'Aubrey de Grey': {
+                            "url": '73',
+                            "Description": '59.2'
+                            // 'IDforBill': '35.0',
+                        },
+                        'SENS Research Foundation': {
+                            "url": '73',
+                            "Description": '117.3'
+                            // 'IDforBill': '91.9',
+                        },
 
-                  // }
-                dataLabels: {
-                    enabled: true
-
-                    // useHTML: true
-                    // formatter: function(){
-                    //   return '<div class="bill-link">' + this.level.name + '</div>';
-                    // }
-
-                    // events:{
-                    //     click: function (event) {
-                    //                alert(event.point.name);
-                    //             // add your redirect code and u can get data using event.point
-                    //     }
-                    // }
-
-
+                    },
+                    'Small Business': {
+                        'Awesome bill to help small business owners': {
+                            "url": '73',
+                            "Description": '16.8',
+                            // 'IDforBill': '44.3'
+                        },
+                        'Another bill to help SM get health care': {
+                            "url": '73',
+                            "Description": '22.6',
+                            // 'IDforBill': '48.9'
+                        },
+                    },
 
                 },
-                borderWidth: 3
-
-                // point: {
-                //   events: {
-                //     click: function(e) {
-                //       //this.slice();
-                //       //console.log(e);
-                //       location.href = e.point.url;
-                //       e.preventDefault();
-                //     }
-                //   }
-                // },
-
-            }],
-            data: points
-        }],
-        // plotOptions: {
-        //   allowPointSelect: true,
-        //   cursor: 'pointer',
-        //   dataLabels
-        // }
+                points = [],
+                committeeP,
+                committeeVal,
+                committeeI = 0,
+                indvBillsP,
+                indvBillsI,
+                causeP,
+                causeI,
+                committee,
+                indvBills,
+                cause,
+                causeName = {
+                    "url": "<a href='#'>Click for bill details'</a>",
+                    'Description': 'Bill details'
+                    // 'IDforBill': 'Bill id'
 
 
-        title: {
-            text: 'Bills by Committee (Per Session)'
-        }
-    });
-});
+                };
 
-// $(".bill-link").on('click', function(){
-//   console.log('The click is working!')
-// })
+            for (committee in data) {
+                if (data.hasOwnProperty(committee)) {
+                    committeeVal = 0;
+                    committeeP = {
+                        id: 'id_' + committeeI,
+                        name: committee,
+                        color: Highcharts.getOptions().colors[committeeI]
+                    };
+                    indvBillsI = 0;
+                    for (indvBills in data[committee]) {
+                        if (data[committee].hasOwnProperty(indvBills)) {
+                            indvBillsP = {
+                                id: committeeP.id + '_' + indvBillsI,
+                                name: indvBills,
+                                parent: committeeP.id
+                            };
+                            points.push(indvBillsP);
+                            causeI = 0;
+                            for (cause in data[committee][indvBills]) {
+                                if (data[committee][indvBills].hasOwnProperty(cause)) {
+                                    causeP = {
+                                        id: indvBillsP.id + '_' + causeI,
+                                        name: causeName[cause],
+                                        parent: indvBillsP.id,
+                                        value: Math.round(+data[committee][indvBills][cause])
+                                    };
+                                    committeeVal += causeP.value;
+                                    points.push(causeP);
+                                    causeI = causeI + 1;
+                                }
+                            }
+                            indvBillsI = indvBillsI + 1;
+                        }
+                    }
+                    committeeP.value = Math.round(committeeVal / indvBillsI);
+                    points.push(committeeP);
+                    committeeI = committeeI + 1;
+                }
+            }
+            $('#bill-by-committee').highcharts({
+                series: [{
+                    type: 'treemap',
+                    layoutAlgorithm: 'squarified',
+                    allowDrillToNode: true,
+                    dataLabels: {
+                        enabled: false
+                    },
+                    levelIsConstant: false,
+                    levels: [{
+                        level: 1,
+                        layoutAlgorithm: 'stripes',
+                        color: 'red',
+                        // point: {
+                        //   click: function(){
+                        //     var someURL = this.series.userOptions.URLs[this.x];
+                        //     if (someURL)
+                        //       window.open('')
+                        //   }
+                        // }
+                        // plotOptions: {
+                        //     allowPointSelect: true,
+                            // cursor: 'pointer',
+                            // dataLabels {
+                            //   enabled: true
+                            // }
+                        //     events:{
+                        //       click: function (event) {
+                        //         alert(event.point.name);
+                        //         // add your redirect code and u can get data using event.point
+                        //           console.log('The click is working!')
 
+                        //       }
+                        //     }
+
+                            // useHTML: true
+                            // formatter: function(){
+                            //   return '<div class="bill-link">' + this.level.name + '</div>';
+                            // }
+
+
+
+
+                          // }
+                        dataLabels: {
+                            enabled: true
+
+                            // useHTML: true
+                            // formatter: function(){
+                            //   return '<div class="bill-link">' + this.level.name + '</div>';
+                            // }
+
+                            // events:{
+                            //     click: function (event) {
+                            //                alert(event.point.name);
+                            //             // add your redirect code and u can get data using event.point
+                            //     }
+                            // }
+
+
+
+                        },
+                        borderWidth: 3
+
+                        // point: {
+                        //   events: {
+                        //     click: function(e) {
+                        //       //this.slice();
+                        //       //console.log(e);
+                        //       location.href = e.point.url;
+                        //       e.preventDefault();
+                        //     }
+                        //   }
+                        // },
+
+                    }],
+                    data: points
+                }],
+                // plotOptions: {
+                //   allowPointSelect: true,
+                //   cursor: 'pointer',
+                //   dataLabels
+                // }
+
+
+<<<<<<< HEAD
 </script>
 </div>
+=======
+                title: {
+                    text: 'Bills by Committee (Per Session)'
+                }
+            });
+        });
+
+        // $(".bill-link").on('click', function(){
+        //   console.log('The click is working!')
+        // })
+
+        </script>
+        </div> <!-- END: #bill-by-committee -->
+    </div> <!-- #chart-5-container END -->
+>>>>>>> 0c0817b9cee8df58bd5eb92a0822d3854be7dba7
   </body>
 </html>

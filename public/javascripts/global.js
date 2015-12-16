@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 
     $('body').scrollspy({ target: '.navbar', offset: 50 });
-    $('a').on('click', function(e){
+    $('.chart-link').on('click', function(e){
         console.log("Stopping Click");
         e.preventDefault();
 
