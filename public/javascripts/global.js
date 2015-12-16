@@ -7,6 +7,11 @@ getBills();
 //DOCUMENT READY METHODS
 $(document).ready(function() {
     populate_upcoming_bills();
+
+    $('body').on('click', '#table_congress_list', function(e){
+        e.preventDefault();
+        populate_session_bills('113');
+    })
 });
 
 
@@ -20,17 +25,32 @@ function populate_upcoming_bills() {
     });
 };
 
+function populate_session_bills(session){
+    var base_url = "https://congress.api.sunlightfoundation.com/";
+    var attributes = "bills?congress=" + session;
+    var api_key = "&apikey=838cd938cfb244a7a5728083f9191152";
+    var full_url = base_url + attributes + api_key;
+
+    $.ajax({
+        type: 'GET',
+        url: full_url
+    }).done(function(response){
+        populateTable(response);
+    });
+};
+
 //Page Populating Methods
 //NOTE: Multi-Use
 function populateTable(api_response) {
     console.log("Populating Table");
+    console.log(api_response);
     var tableContent = '';
     var bills = api_response.results;
 
     $.each(bills, function(){
         tableContent += '<tr>';
         tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
-        tableContent += '<td>' + (this.context || this.description) + '</td>';
+        tableContent += '<td>' + (this.context || this.description || this.official_title) + '</td>';
         tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
         tableContent += '</tr>';
     });
@@ -38,6 +58,8 @@ function populateTable(api_response) {
     $('#billList table tbody').html(tableContent);
 };
 
+
+//
 function getBills() {
     var bill_ids = [];
 
