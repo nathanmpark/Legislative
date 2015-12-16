@@ -6,12 +6,12 @@ getBills();
 
 //DOCUMENT READY METHODS
 $(document).ready(function() {
-    get_upcoming_bills();
+    getUpcomingBills();
 
 });
 
 //***** FUNCTIONS *****
-function getUrl(bill_id) {
+function getBillUrl(bill_id) {
     return 'https://congress.api.sunlightfoundation.com/bills?bill_id=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152';
 };
 
@@ -27,7 +27,7 @@ function getUpcomingUrl(){
     return 'https://congress.api.sunlightfoundation.com/upcoming_bills?apikey=838cd938cfb244a7a5728083f9191152';
 }
 
-function get_upcoming_bills() {
+function getUpcomingBills() {
     $.ajax({
         type: 'GET',
         url: getUpcomingUrl()
@@ -38,7 +38,7 @@ function get_upcoming_bills() {
     });
 };
 
-function get_session_bills(session){
+function getSessionBills(session){
     $.ajax({
         type: 'GET',
         url: getSessionUrl(session)
@@ -56,31 +56,27 @@ function getBills() {
         type: 'GET',
         url: getUpcomingUrl()
     }).done(function(response) {
-        console.log(response)
-
         var bills = response.results
-
         $.each(bills, function(){
             bill_ids.push(this.bill_id)
         });
-
-        billCommittees(bill_ids)
+        // billCommittees is in the .done due to the asynchronous nature of Javascript
+        getBillDetails(bill_ids)
     }).fail(function(error){
         console.log(error)
     })
 };
 
-function billCommittees(upcoming_bills) {
-    $.each(upcoming_bills, function(){
-        var request = getUrl(this)
-
+function getBillDetails(bills) {
+    $.each(bills, function(){
         $.ajax({
             type: 'get',
-            url: request
+            url: getBillUrl(this)
         }).done(function(response){
+            console.log(response)
             if(response.results && response.results.length > 0){
                 var committee_list = response.results[0].committee_ids
-                setCommitteeKeywords(response, committee_list);
+                setCommittee(response, committee_list);
             } else {
                 console.log('Bill not found', request);
             }
@@ -91,7 +87,7 @@ function billCommittees(upcoming_bills) {
 };
 
 
-function setCommitteeKeywords(bill_obj, committee_ids) {
+function setCommittee(bill_obj, committee_ids) {
 
     $.each(committee_ids, function(){
         var request = getCommitteeUrl(this)
