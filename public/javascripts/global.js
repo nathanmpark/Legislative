@@ -16,11 +16,11 @@ $(document).ready(function() {
 
         var hash = this.hash;
 
-        // $('html, body').animate({
-        //     scrollTop: $(hash).offset().top
-        // }, 800, function(){
-        //     window.location.hash = hash;
-        // });
+        $('html, body').animate({
+            scrollTop: $(hash).offset().top
+        }, 800, function(){
+            window.location.hash = hash;
+        });
     });
 });
 
@@ -86,20 +86,22 @@ function getBills() {
     })
 };
 
-function getFloorUpdates(bill_ids) {
+function getFloorUpdates(bills) {
     $.each(bills, function(){
         $.ajax({
             type: 'get',
             url: getFloorUpdatesUrl(this)
         }).done(function(response){
-            populateTable
+            console.log("FLOOR UPDATES")
+            console.log(response)
+            populateFloorUpdates(response)
         }).fail(function(error){
             console.log(error)
         });
-    };
+    });
 };
 
-function populateTable(api_response) {
+function populateFloorUpdates(api_response) {
     console.log("Populating Table");
     console.log(api_response);
     var tableContent = '';
@@ -127,7 +129,7 @@ function getBillDetails(bills) {
                 var committee_list = response.results[0].committee_ids
                 setCommittee(response, committee_list);
             } else {
-                console.log('Bill not found', request);
+                console.log('Bill not found', getBillUrl(this));
             }
         }).fail(function(error){
             console.log(error)
