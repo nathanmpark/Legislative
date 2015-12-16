@@ -109,9 +109,10 @@ function populateFloorUpdates(api_response) {
 
     $.each(bills, function(){
         tableContent += '<tr>';
-        tableContent += '<td><a href="#" class="linkshowbill" rel="' + this.bill_id + '">' + this.bill_id + '</a></td>';
-        tableContent += '<td>' + (this.context || this.description || this.official_title) + '</td>';
-        tableContent += '<td><a href="#" class="linkapibill" rel="' + this.bill_id + '">show</a></td>';
+        tableContent += '<td>' + this.timestamp + '</td>';
+        tableContent += '<td>' + this.bill_ids[0] + '</td>';
+        tableContent += '<td>' + this.chamber + '</td>';
+        tableContent += '<td>' + this.update + '</td>';
         tableContent += '</tr>';
     });
 
