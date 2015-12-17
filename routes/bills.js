@@ -26,6 +26,7 @@ router.post('/add_bill', function(req, res) {
     			{'committee_id': req.body.committee_id,
     			'committee_name': req.body.committee_name},
         'congress': req.body.congress,
+        'description': req.body.description,
         'chamber' : req.body.chamber,
         'urls':
             {
@@ -39,7 +40,14 @@ router.post('/add_bill', function(req, res) {
                 'last_action_date': req.body.last_action_date,
                 'last_version_date': req.body.last_version_date
             },
-        'history': req.body.history
+        'history': 
+            {
+                'active': req.body.active,
+                'active_at': req.body.active_at,
+                'awaiting_signature': req.body.awaiting_signature,
+                'enacted': req.body.enacted,
+                'vetoed': req.body.vetoed
+            }
     	},
     	{
         'bill_id': req.body.bill_id,
@@ -47,6 +55,7 @@ router.post('/add_bill', function(req, res) {
                 {'committee_id': req.body.committee_id,
                 'committee_name': req.body.committee_name},
         'congress': req.body.congress,
+        'description': req.body.description,
         'chamber' : req.body.chamber,
         'urls':
             {
@@ -60,12 +69,19 @@ router.post('/add_bill', function(req, res) {
                 'last_action_date': req.body.last_action_date,
                 'last_version_date': req.body.last_version_date
             },
-        'history': req.body.history
-    	},
+        'history': 
+            {
+                'active': req.body.active,
+                'active_at': req.body.active_at,
+                'awaiting_signature': req.body.awaiting_signature,
+                'enacted': req.body.enacted,
+                'vetoed': req.body.vetoed
+            }
+        },
     	{'upsert': true},
 	    function(err, result){
-            if(err){console.error("add bill error", err);}
-            if(result){console.log("add bill result", result);}
+            if(err){console.error("failed to add bill", err);}
+            if(result){console.log("successfully added bill", result);}
 	        res.send(
 	            (err === null) ? { msg: '' } : { msg: err }
 	        );
