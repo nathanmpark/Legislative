@@ -11,3 +11,6 @@ return an array of numbers
 
 Incorporate javacsript in separate script tags in head instead of in body
 
+Query MongoDB
+Select count* from Session_BIlls 
+Where Comittee_ID like ...
