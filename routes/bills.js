@@ -22,6 +22,8 @@ router.post('/add_bill', function(req, res) {
     collection.update(
     	{
         'bill_id': req.body.bill_id,
+        'official_title': req.body.official_title,
+        'short_title': req.body.short_title,
         'committees':
     			{'committee_id': req.body.committee_id,
     			'committee_name': req.body.committee_name},
@@ -51,6 +53,8 @@ router.post('/add_bill', function(req, res) {
     	},
     	{
         'bill_id': req.body.bill_id,
+        'official_title': req.body.official_title,
+        'short_title': req.body.short_title,
         'committees':
                 {'committee_id': req.body.committee_id,
                 'committee_name': req.body.committee_name},

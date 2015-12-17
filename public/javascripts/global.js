@@ -120,6 +120,8 @@ function setCommittee(detailed_bill_obj, upcoming_bill_obj) {
 
             // debugger
             bill['bill_id'] = bill_obj.bill_id;
+            bill['official_title'] = bill_obj.official_title;
+            bill['short_title'] = bill_obj.short_title;
             bill['committee_id'] = committee_id;
             bill['committee_name'] = committee_name;
             bill['congress'] = bill_obj.congress;
