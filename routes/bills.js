@@ -128,4 +128,21 @@ router.get('/bill_data', function(req, res) {
     };
 });
 
+
+
+// SEED ROUTES BE CARFEUL
+router.get('/seed_114', function(req, res, next){
+    res.render('seed_114');
+})
+
+router.post('/seed_bills', function(req, res, next){
+    var db = req.db;
+    var collection = db.get('oneonefour_bills');
+
+    console.log("Successful Hit to #seed_bills");
+    // console.log(req.body);
+
+    collection.insert(req.body);
+});
+
 module.exports = router;
