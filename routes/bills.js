@@ -148,6 +148,61 @@ router.get('/bill_data', function(req, res) {
     };
 });
 
+router.get('/tree_data', function(req, res) {
+    var db = req.db;
+    var collection = db.get('bill_list');
+    collection.find({},{},function(e,docs){
+        if(e){
+            console.error(e);
+            res.status(401);
+            res.json({error: e});
+        } else {
+            var bill_data = graphData(docs)
+            res.json(bill_data);
+        }
+    });
+
+    function graphData(data) {
+        var bill_data = {}
+        if(data){
+            for (var i = 0; i < data.length; i++) {
+                var committee_name = data[i].committees.committee_name
+                if (bill_data.hasOwnProperty(committee_name)){
+                    bill_data[committee_name]++;
+                } else {
+                    bill_data[committee_name] = 1;
+                };
+            }
+        } else {
+            console.error('No data in graphData()');
+        }
+        return bill_data
+    };
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // SEED ROUTES BE CARFEUL
