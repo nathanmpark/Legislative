@@ -52,7 +52,8 @@ function getCommitteeCounts(tree_data){
 		type: 'GET',
 		url: '/bills/tree_data'
 	}).done(function(response){
-		populateTreeMap(tree_data, response)
+		var chart_data = populateTreeMap(tree_data, response)
+		organizeData(chart_data)
 	}).fail(function(error){
 		console.log(error)
 	});
@@ -66,11 +67,12 @@ function populateTreeMap(tree_data, committee_counts) {
 		var committee_name = tree_data[i].committees.committee_name
 		var title = tree_data[i].short_title ? tree_data[i].short_title : tree_data[i].official_title
 		treeMapData[title] = innerData
-		innerData['url'] = '1' //String(committee_counts[committee_name])
+		innerData['url'] = committee_counts[committee_name].toString();
 		chart_data[committee_name] = treeMapData
 	}
 	// console.log(chart_data)
-	organizeData(chart_data)
+	// organizeData(chart_data)
+	return chart_data
 };
 
 function organizeData(chartData){
