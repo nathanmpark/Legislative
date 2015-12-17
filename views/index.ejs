@@ -66,13 +66,11 @@
 
     <!-- **** CHART 1 **** -->
     <div class="chart-containers" id="chart-1-container">
-<<<<<<< HEAD
       <a class="chart-link" href="#chart-opening" ><img id="up_arrow" src='/images/arrow_btn_u_red.png'/></a>
-=======
-      <h1>Number of Upcoming Bills in Congressional Committee</h1>
-      <canvas id="upcomingBills" width="600" height="600"></canvas>
-      <script>
->>>>>>> 251806a5f6e973b5b7783e76a67e1eee300d1d72
+
+      <div id="text-right">
+        <h1>Number of Upcoming Bills in Congressional Committee</h1>
+      </div>
 
       <canvas id="upcomingBills" width="600" height="550"></canvas>
       <script>
@@ -93,10 +91,11 @@
 
     <div class="chart-containers" id='chart-2-container' >
       <a class="chart-link" href="#chart-1-container" ><img id="up_arrow" src='/images/arrow_btn_u_red.png'/></a>
+      <div id="text-right">
+        <h1>Bill in this Congressional Session</h1>
+      </div>
 
-      <h1>Bill in this Congressional Session</h1>
       <canvas id="current_session" width="600" height="450"></canvas>
-
       <script>
         var congress = document.getElementById("current_session").getContext("2d");
 

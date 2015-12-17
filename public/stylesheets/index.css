@@ -121,6 +121,13 @@ body {
   width: 120px;
   height: auto;
 }
+
+/* **** CONTENT ***** */
+#text-right {
+  float: right;
+  width: 40%;
+}
+
 /* ********* *//* ********* */
 /* ********* *//* ********* */
 
