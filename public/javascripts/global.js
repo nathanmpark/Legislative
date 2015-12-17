@@ -52,7 +52,8 @@ function getUpcomingBills() {
         type: 'GET',
         url: getUpcomingUrl()
     }).done(function(response){
-        console.log(response)
+        var current_session = response.results[0].congress
+        getSessionBills(current_session)
     }).fail(function(error){
         console.log(error)
     });
@@ -63,7 +64,12 @@ function getSessionBills(session){
         type: 'GET',
         url: getSessionUrl(session)
     }).done(function(response){
-        console.log(response)
+        if(response.results && response.results.length > 0){
+            var committee_list = response.results[0].committee_ids
+            setCommittee(response, committee_list);
+        } else {
+            console.log('Bill not found', getBillUrl(this));
+        }
     }).fail(function(error){
         console.log(error)
     });
@@ -94,8 +100,6 @@ function getFloorUpdates(bills) {
             type: 'get',
             url: getFloorUpdatesUrl(this)
         }).done(function(response){
-            console.log("FLOOR UPDATES")
-            console.log(response)
             populateFloorUpdates(response)
         }).fail(function(error){
             console.log(error)
@@ -127,7 +131,6 @@ function getBillDetails(bills) {
             type: 'get',
             url: getBillUrl(this)
         }).done(function(response){
-            console.log(response)
             if(response.results && response.results.length > 0){
                 var committee_list = response.results[0].committee_ids
                 setCommittee(response, committee_list);
@@ -141,7 +144,6 @@ function getBillDetails(bills) {
 };
 
 function setCommittee(bill_obj, committee_ids) {
-
     $.each(committee_ids, function(){
         var request = getCommitteeUrl(this)
 

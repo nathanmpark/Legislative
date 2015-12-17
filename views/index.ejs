@@ -22,7 +22,9 @@
     <script src="/js/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
     <script type='text/javascript', src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script type='text/javascript', src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script> <!--May need, maybe not--> 
     <script src="https://code.highcharts.com/modules/heatmap.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
   </head>
@@ -58,6 +60,15 @@
         });
       </script>
     </div> <!-- '#chart-1-container' -->
+
+    <!-- Begin HighChart version of #chart-1-container' -->
+
+
+
+
+
+
+    <!-- End HighChart version of #chart-1-container' -->
 
     <!-- Floor Updates Feed -->
     <div id='bill-list-container'>
@@ -222,43 +233,43 @@
         <script>
           $(function () {
             var data = {
-                    'Aging': {
-                        'Bill to help old people like Mary': {
-                            "url": '673',
-                            "Description": '75.5',
+                    'Committee 1': {
+                        'Bill Name or Number 1': {
+                            // "URL": '1',
+                            "Description": '1',
                             // 'IDforBill': '89.0',
                         },
-                        'The Mitochondrial Free Radical Theory of Aging': {
-                            "url": '73',
-                            "Description": '234.6'
+                        'Bill Name or Number 2': {
+                            // "URL": '1',
+                            "Description": '1',
                             // 'IDforBill': '64.0',
                         },
-                        ' Rejuvenation Research': {
-                            "url": '73',
-                            "Description": '316.4',
+                        'Bill Name or Number 3': {
+                            // "URL": '1',
+                            "Description": '1',
                             // 'IDforBill': '102.0',
                         },
-                        'Aubrey de Grey': {
-                            "url": '73',
-                            "Description": '59.2'
+                        'Bill Name or Number 4': {
+                            // "URL": '1',
+                            "Description": '1',
                             // 'IDforBill': '35.0',
                         },
-                        'SENS Research Foundation': {
-                            "url": '73',
-                            "Description": '117.3'
+                        'Bill Name or Number 5': {
+                            // "URL": '1',
+                            "Description": '1',
                             // 'IDforBill': '91.9',
                         },
 
                     },
-                    'Small Business': {
-                        'Awesome bill to help small business owners': {
-                            "url": '73',
-                            "Description": '16.8',
+                    'Committee 2': {
+                        'Bill Name or Number 1': {
+                            // "URL": '1',
+                            "Description": '1',
                             // 'IDforBill': '44.3'
                         },
-                        'Another bill to help SM get health care': {
-                            "url": '73',
-                            "Description": '22.6',
+                        'Bill Name or Number 1': {
+                            // "URL": '1',
+                            "Description": '1',
                             // 'IDforBill': '48.9'
                         },
                     },
@@ -276,8 +287,8 @@
                 indvBills,
                 cause,
                 causeName = {
-                    "url": "<a href='#'>Click for bill details'</a>",
-                    'Description': 'Bill details'
+                    // "url": "<a href='#'>Click for bill details'</a>",
+                    'Description': 'This is the text from the value of Description under causeName '
                     // 'IDforBill': 'Bill id'
 
 
@@ -335,77 +346,21 @@
                         level: 1,
                         layoutAlgorithm: 'stripes',
                         color: 'red',
-                        // point: {
-                        //   click: function(){
-                        //     var someURL = this.series.userOptions.URLs[this.x];
-                        //     if (someURL)
-                        //       window.open('')
-                        //   }
-                        // }
-                        // plotOptions: {
-                        //     allowPointSelect: true,
-                            // cursor: 'pointer',
-                            // dataLabels {
-                            //   enabled: true
-                            // }
-                        //     events:{
-                        //       click: function (event) {
-                        //         alert(event.point.name);
-                        //         // add your redirect code and u can get data using event.point
-                        //           console.log('The click is working!')
-
-                        //       }
-                        //     }
-
-                            // useHTML: true
-                            // formatter: function(){
-                            //   return '<div class="bill-link">' + this.level.name + '</div>';
-                            // }
-
-
-
-
-                          // }
                         dataLabels: {
                             enabled: true
-
-                            // useHTML: true
-                            // formatter: function(){
-                            //   return '<div class="bill-link">' + this.level.name + '</div>';
-                            // }
-
-                            // events:{
-                            //     click: function (event) {
-                            //                alert(event.point.name);
-                            //             // add your redirect code and u can get data using event.point
-                            //     }
-                            // }
-
-
-
                         },
                         borderWidth: 3
-
-                        // point: {
-                        //   events: {
-                        //     click: function(e) {
-                        //       //this.slice();
-                        //       //console.log(e);
-                        //       location.href = e.point.url;
-                        //       e.preventDefault();
-                        //     }
-                        //   }
-                        // },
-
+                    },
+                    {
+                        level: 2,
+                        layoutAlgorithm: 'squarified',
+                        color: 'blue',
+                        dataLabels: {
+                            enabled: false
+                        },
                     }],
                     data: points
                 }],
-                // plotOptions: {
-                //   allowPointSelect: true,
-                //   cursor: 'pointer',
-                //   dataLabels
-                // }
-
                 title: {
                     text: 'Bills by Committee (Per Session)'
                 }
