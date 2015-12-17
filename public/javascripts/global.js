@@ -6,8 +6,6 @@ getBills();
 
 //DOCUMENT READY METHODS
 $(document).ready(function() {
-    getUpcomingBills();
-
 
     $('body').scrollspy({ target: '.navbar' });
     $('.chart-link').on('click', function(e){
@@ -72,48 +70,16 @@ function getFloorUpdatesUrl(bill_id){
     return 'https://congress.api.sunlightfoundation.com/floor_updates?bill_ids=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
 }
 
-function getUpcomingBills() {
-    $.ajax({
-        type: 'GET',
-        url: getUpcomingUrl()
-    }).done(function(response){
-        var current_session = response.results[0].congress
-        getSessionBills(current_session)
-    }).fail(function(error){
-        console.log(error)
-    });
-};
-
-function getSessionBills(session){
-    $.ajax({
-        type: 'GET',
-        url: getSessionUrl(session)
-    }).done(function(response){
-        if(response.results && response.results.length > 0){
-            var committee_list = response.results[0].committee_ids
-            setCommittee(response, committee_list);
-        } else {
-            console.log('Bill not found', getBillUrl(this));
-        }
-    }).fail(function(error){
-        console.log(error)
-    });
-};
-
 function getBills() {
-    var bill_ids = [];
-
     $.ajax({
         type: 'GET',
         url: getUpcomingUrl()
     }).done(function(response) {
         var bills = response.results
-        $.each(bills, function(){
-            bill_ids.push(this.bill_id)
-        });
-        getFloorUpdates(bill_ids)
-        // billCommittees is in the .done due to the asynchronous nature of Javascript
-        getBillDetails(bill_ids)
+        // these functions are in the .done due to the asynchronous nature of Javascript
+        getFloorUpdates(bills)
+        // getBillDetails is taking an array of bill ids to hit the /bills api
+        getBillDetails(bills)
     }).fail(function(error){
         console.log(error)
     })
@@ -123,7 +89,7 @@ function getFloorUpdates(bills) {
     $.each(bills, function(){
         $.ajax({
             type: 'get',
-            url: getFloorUpdatesUrl(this)
+            url: getFloorUpdatesUrl(this.bill_id)
         }).done(function(response){
             populateFloorUpdates(response)
         }).fail(function(error){
@@ -133,8 +99,6 @@ function getFloorUpdates(bills) {
 };
 
 function populateFloorUpdates(api_response) {
-    console.log("Populating Table");
-    console.log(api_response);
     var tableContent = '';
     var bills = api_response.results;
 
@@ -151,14 +115,13 @@ function populateFloorUpdates(api_response) {
 };
 
 function getBillDetails(bills) {
-    $.each(bills, function(){
+    $.each(bills, function(i){
         $.ajax({
-            type: 'get',
-            url: getBillUrl(this)
+            type: 'GET',
+            url: getBillUrl(this.bill_id)
         }).done(function(response){
             if(response.results && response.results.length > 0){
-                var committee_list = response.results[0].committee_ids
-                setCommittee(response, committee_list);
+                setCommittee(response, bills[i]);
             } else {
                 console.log('Bill not found', getBillUrl(this));
             }
@@ -168,31 +131,40 @@ function getBillDetails(bills) {
     });
 };
 
-function setCommittee(bill_obj, committee_ids) {
+function setCommittee(detailed_bill_obj, upcoming_bill_obj) {
+    var committee_ids = detailed_bill_obj.results[0].committee_ids
     $.each(committee_ids, function(){
-        var request = getCommitteeUrl(this)
-
         $.ajax({
             type: 'get',
-            url: request
+            url: getCommitteeUrl(this)
         }).done(function(response){
             var bill = {}
-            var extractable_bill_obj = bill_obj.results[0];
+            var bill_obj = detailed_bill_obj.results[0];
             var committee_id = response.results[0].committee_id
             var committee_name = response.results[0].name
 
-            bill['bill_id'] = extractable_bill_obj.bill_id;
+            // debugger
+            bill['bill_id'] = bill_obj.bill_id;
+            bill['official_title'] = bill_obj.official_title;
+            bill['short_title'] = bill_obj.short_title;
             bill['committee_id'] = committee_id;
             bill['committee_name'] = committee_name;
-            bill['congress'] = extractable_bill_obj.congress;
-            bill['chamber'] = extractable_bill_obj.chamber;
-            bill['url_congress'] = extractable_bill_obj.urls.congress;
-            bill['url_govtrack'] = extractable_bill_obj.urls.govtrack;
-            bill['url_opencongress'] = extractable_bill_obj.urls.opencongress;
-            bill['intro_date'] = extractable_bill_obj.introduced_on;
-            bill['last_action_date'] = extractable_bill_obj.last_action_at;
-            bill['last_version_date'] = extractable_bill_obj.last_version_on;
-            bill['history'] = extractable_bill_obj.history;
+            bill['congress'] = bill_obj.congress;
+            bill['description'] = upcoming_bill_obj['description'];
+            bill['chamber'] = bill_obj.chamber;
+            bill['url_congress'] = bill_obj.urls.congress;
+            bill['url_govtrack'] = bill_obj.urls.govtrack;
+            bill['url_opencongress'] = bill_obj.urls.opencongress;
+            bill['intro_date'] = bill_obj.introduced_on;
+            bill['last_action_date'] = bill_obj.last_action_at;
+            bill['last_version_date'] = bill_obj.last_version_on;
+            bill['active'] = bill_obj.history.active;
+            bill['active_at'] = bill_obj.history.active_at;
+            bill['awaiting_signature'] = bill_obj.history.awaiting_signature;
+            bill['enacted'] = bill_obj.history.enacted;
+            bill['senate_passage_result'] = bill_obj.history.senate_passage_result;
+            bill['senate_passage_result_at'] = bill_obj.history.senate_passage_result_at;
+            bill['vetoed'] = bill_obj.history.vetoed;
 
             addBill(bill);
         }).fail(function(error){
@@ -213,75 +185,4 @@ function addBill(bill) {
         console.log(error)
     })
 };
-
-
-
-//*** TEST FUNCTION TO SEED DB ***
-
-// function seed_session(){
-//     var simple_url = "https://congress.api.sunlightfoundation.com/bills?congress=114&per_page=50&apikey=838cd938cfb244a7a5728083f9191152";
-
-//     var base_url = "https://congress.api.sunlightfoundation.com/bills?congress=114&per_page=50&page=";
-//     var api_key = "&apikey=838cd938cfb244a7a5728083f9191152"
-
-//     console.log('simple url launch:');
-//     //Get total bills
-//     $.ajax({
-//         type: 'GET',
-//         url: simple_url,
-//         dataType: 'JSON'
-//     }).done(function(response){
-//         var total_calls = getTotalBills(response);
-
-//         var base_url = "https://congress.api.sunlightfoundation.com/bills?congress=114&per_page=50&page=";
-//         var api_key = "&apikey=838cd938cfb244a7a5728083f9191152"
-
-//         for(var i = 1; i <= total_calls; i++) {
-//             var full_url = base_url + i.toString() + api_key;
-//             $.ajax({
-//                 type: 'GET',
-//                 url: full_url,
-//                 dataType: 'JSON'
-//             }).done(function(response){
-//                 loopBillPage(response.results);
-//             });
-//         };
-
-
-//     });
-// };
-
-// function getTotalBills(response){
-// //Gets the total bills from an object and returns the number of api calls needed to acquire all bills
-//     var bills = response.count;
-//     return Math.floor(bills/50) + 1;
-// };
-
-// function loopBillPage(bill_array){
-// //Loops through each json object of 50 bills
-//     for (var i = 0; i < bill_array.length; i++){
-//         add_oneonethree_bill(bill_array[i]);
-//     };
-// };
-
-
-// function add_oneonethree_bill(bill_obj){
-// // Hit '/seed_bills' Post route and add bill to database
-//     console.log("Sending Request");
-//     $.ajax({
-//         type: 'POST',
-//         url: '/bills/seed_bills',
-//         data: bill_obj
-//     }).done(function(response){
-//         console.log(response);
-//     })
-// }
-
-// //Get total bills
-// //Divide total by 50
-// //Use a counter to iterate through each page
-// //Iterate through each page and save items to dbs
-
-
-
 
