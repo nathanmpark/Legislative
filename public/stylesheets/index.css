@@ -16,7 +16,7 @@ body {
 }
 /* ********* *//* ********* */
 
-#cover {
+#cover_fill {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -25,32 +25,71 @@ body {
   opacity: 0.8;
 }
 
-#cover_image {
+#cover_container{
   position: fixed;
+  top: 25%;
+  left: 35%;
+
+  /*border: 2px dotted red;*/
+}
+
+#cover_image {
+  position: relative;
+  display: block;
   opacity: 1;
-  top: 30%;
-  left: 30%;
+/*  top: 30%;
+  left: 30%;*/
   height: 300px;
   width: auto;
 }
 
+#cover_btn {
+  position: relative;
+  height: 150px;
+  width: auto;
+  left: 24%;
+}
+
+#cover_text {
+  position: relative;
+}
+
+#front_logo {
+  position: relative;
+  display: block;
+  margin: auto;
+  top: 5%;
+/*  left: 25%;*/
+  height: 350px;
+}
+
+#front_btn {
+  position: relative;
+  display: block;
+  margin: auto;
+  margin-top: 120px;
+  height: 150px;
+}
 
 /* *** CHART CONTAINERS *** */
 /* ********* *//* ********* */
 .chart-containers {
   /*border: 2px dotted red;*/
-  height: calc(100vh - 60px);
+  height: calc(100vh);
   margin: 0;
   padding: 5%;
 }
 
-#chart-1-container {
+#chart-opening {
   background-color: grey;
+}
+
+#chart-1-container {
+  background-color: #006699;
 }
 
 #chart-2-container {
   background-color: #a2798f;
-  padding: 0%;
 }
 
 #chart-3-container {
@@ -65,9 +104,25 @@ body {
 #chart-5-container {
   background-color: #006699;
 }
-/* ********* *//* ********* */
-/* ********* *//* ********* */
 
+#up_arrow {
+  position: relative;
+  display: block;
+  margin: auto;
+/*  top: -5%;*/
+  width: 120px;
+  height: auto;
+}
+
+#down_arrow {
+  position: relative;
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: auto;
+}
+/* ********* *//* ********* */
+/* ********* *//* ********* */
 
 
 .details-button-right {
