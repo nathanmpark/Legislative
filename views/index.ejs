@@ -49,6 +49,7 @@
 
     <!-- **** CHART 1 **** -->
     <div class="chart-containers" id="chart-1-container">
+      <h1>Number of Upcoming Bills in Congressional Committee</h1>
       <canvas id="upcomingBills" width="600" height="600"></canvas>
       <script>
 
@@ -90,11 +91,38 @@
     </div>
 
     <div class="chart-containers" id='chart-2-container' >
-      <h1>Bill in this Congressional Session</h1>
+      <h1>Bills in the Current Congressional Session</h1>
       <canvas id="current_session" width="600" height="600"></canvas>
 
       <script>
         var congress = document.getElementById("current_session").getContext("2d");
+
+        $.ajax({
+          type: 'GET',
+          url: 'https://congress.api.sunlightfoundation.com/bills?congress=114&apikey=838cd938cfb244a7a5728083f9191152'
+        }).done(function(response){
+          var session_bill = response.results
+          console.log(session_bill)
+          $.each(session_bill, function(){
+            var bill_data = {}
+            for (var i = 0; i < session_bill.length; i++) {
+              if (session_bill.committee_ids){
+                var committee_name = session_bill[i].committee_ids[0]
+
+                if (bill_data.hasOwnProperty(committee_name)){
+                    bill_data[committee_name]++;
+                } else {
+                    bill_data[committee_name] = 1;
+                };
+              };
+            };
+            console.log(bill_data) 
+          });
+
+
+        }).fail(function(error){
+          console.log(error)
+        });
 
         var sessionData = {
           labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
