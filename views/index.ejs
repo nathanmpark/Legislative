@@ -24,7 +24,7 @@
     <script type='text/javascript', src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script type='text/javascript', src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script> <!--May need, maybe not--> 
+    <script src="https://code.highcharts.com/modules/data.js"></script> <!--May need, maybe not-->
     <script src="https://code.highcharts.com/modules/heatmap.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
     <script src="/javascripts/tree_map.js"></script>
@@ -33,17 +33,19 @@
 
 
 
-<!-- ***** BODY CONTENT ***** -->
-  <body data-spy="scroll" data-target=".navbar" data-offset="50">
-
     <nav class="navbar navbar-default navbar-fixed-top">
-      <a class="navbar-brand" href="/">Legislative</a>
+      <a href="/"><img class="navbar-brand" id="header_logo" href="/" src="/images/legislative_logo.png"/></a>
       <a class="navbar-brand chart-link" href="#chart-1-container">Chart 1</a>
       <a class="navbar-brand chart-link" href="#chart-2-container">Chart 2</a>
       <a class="navbar-brand chart-link" href="#chart-3-container">Chart 3</a>
       <a class="navbar-brand chart-link" href="#chart-4-container">Chart 4</a>
       <a class="navbar-brand chart-link" href="#chart-5-container">Chart 5</a>
     </nav>
+<!-- ***** BODY CONTENT ***** -->
+  <body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <div class="cover" id='cover'>
+    </div>
+    <img class="cover" id='cover_image' src='/images/legislative_logo_v.png'/>
 
     <!-- **** CHART 1 **** -->
     <div class="chart-containers" id="chart-1-container">
