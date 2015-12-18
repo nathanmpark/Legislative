@@ -61,9 +61,7 @@ function populateTreeMap(tree_data) {
 		// innerData['bill_id'] = '1'
 		ChartData[tree_data[i].committees.committee_name] = treeMapData
 	}
-
-	console.log(ChartData)
-	// return ChartData
+	return ChartData
 };
 
 function organizeData(chartData){
