@@ -56,12 +56,14 @@ function populateTreeMap(tree_data) {
 		var treeMapData = {}
 		var innerData = {}
 		treeMapData[tree_data[i].short_title ? tree_data[i].short_title : tree_data[i].official_title] = innerData
-		innerData['url'] = '10'
+		innerData['url'] = '1'
 		// innerData['description'] = '1'
 		// innerData['bill_id'] = '1'
 		ChartData[tree_data[i].committees.committee_name] = treeMapData
 	}
-	return ChartData
+
+	console.log(ChartData)
+	// return ChartData
 };
 
 function organizeData(chartData){
