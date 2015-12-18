@@ -36,15 +36,7 @@
 <!-- ***** BODY CONTENT ***** -->
   <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
-    <!--
-    <div class="cover" id='cover_fill'>
-    </div>
-    <div class="cover" id="cover_container">
-      <img class="cover" id='cover_image' src='/images/legislative_logo_v.png'/>
-      <img class="cover" id='cover_btn' src='/images/discover_btn_blue.png'/>
-    </div>
-    -->
-
+    <!-- NAV BAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <a href="/"><img class="navbar-brand" id="header_logo" href="/" src="/images/legislative_logo.png"/></a>
       <a class="navbar-brand chart-link" href="#chart-1-container">Chart 1</a>
@@ -54,135 +46,149 @@
       <a class="navbar-brand chart-link" href="#chart-5-container">Chart 5</a>
     </nav>
 
-
+    <!-- **** OPENING SEGMENT ***** -->
     <div class="chart-containers" id="chart-opening">
-
+      <img id='front_img' src="/images/congress_image.jpg"/>
       <img id="front_logo" src='/images/legislative_logo_large.png'/>
+
+      <div id="front_box">
+        <h2 id="front_text">Bills Scheduled to Hit the Floor this Week:</h2>
+        <div id="answer"></div>
+      </div>
 
       <a class="chart-link" href="#chart-1-container">
       <img id="front_btn" src='/images/discover_btn_blue.png'/></a>
-
     </div>
 
     <!-- **** CHART 1 **** -->
     <div class="chart-containers" id="chart-1-container">
       <a class="chart-link" href="#chart-opening" ><img id="up_arrow" src='/images/arrow_btn_u_red.png'/></a>
 
-      <div id="text-right">
-        <h1>Number of Upcoming Bills in Congressional Committee</h1>
-      </div>
+      <div class="content-container">
+        <div id="text-right">
+          <h1>Number of Upcoming Bills in Congressional Committee</h1>
+        </div>
 
-      <canvas id="upcomingBills" width="600" height="550"></canvas>
-      <script>
-        var ctx = document.getElementById("upcomingBills").getContext("2d");
+        <canvas id="upcomingBills" width="600" height="550"></canvas>
+        <script>
+          var ctx = document.getElementById("upcomingBills").getContext("2d");
 
-        $.ajax({
-          type: 'GET',
-          url: '/bills/bill_data'
-        }).done(function(response){
-          var bill_data = response;
-          new Chart(ctx).PolarArea(bill_data, {animation:true, animationSteps: 250, animateRotate : true, animateScale : true});
-        });
-      </script>
+          $.ajax({
+            type: 'GET',
+            url: '/bills/bill_data'
+          }).done(function(response){
+            var bill_data = response;
+            new Chart(ctx).PolarArea(bill_data, {animation:true, animationSteps: 250, animateRotate : true, animateScale : true});
+          });
+        </script>
+      </div> <!-- END: Content Container -->
+
       <a class="chart-link" href="#chart-2-container" ><img id="down_arrow" src='/images/arrow_btn_d_blue.png'/></a>
     </div> <!-- 'END #chart-1-container' -->
 
 
-
+    <!-- **** CHART 2 **** -->
     <div class="chart-containers" id='chart-2-container' >
       <a class="chart-link" href="#chart-1-container" ><img id="up_arrow" src='/images/arrow_btn_u_red.png'/></a>
-      <div id="text-right">
-        <h1>Bill in this Congressional Session</h1>
-      </div>
 
-      <canvas id="current_session" width="600" height="450"></canvas>
-      <script>
-        var congress = document.getElementById("current_session").getContext("2d");
+      <div class="content-container">
+        <div id="text-right">
+          <h1>Bill in the Current Congressional Session</h1>
+        </div>
 
-        $.ajax({
-          type: 'GET',
-          url: 'https://congress.api.sunlightfoundation.com/bills?congress=114&apikey=838cd938cfb244a7a5728083f9191152'
-        }).done(function(response){
-          var session_bill = response.results
-          console.log(session_bill)
-          $.each(session_bill, function(){
-            var bill_data = {}
-            for (var i = 0; i < session_bill.length; i++) {
-              if (session_bill.committee_ids){
-                var committee_name = session_bill[i].committee_ids[0]
+        <canvas id="current_session" width="600" height="450"></canvas>
+        <script>
+          var congress = document.getElementById("current_session").getContext("2d");
 
-                if (bill_data.hasOwnProperty(committee_name)){
-                    bill_data[committee_name]++;
-                } else {
-                    bill_data[committee_name] = 1;
+          $.ajax({
+            type: 'GET',
+            url: 'https://congress.api.sunlightfoundation.com/bills?congress=114&apikey=838cd938cfb244a7a5728083f9191152'
+          }).done(function(response){
+            var session_bill = response.results
+            console.log(session_bill)
+            $.each(session_bill, function(){
+              var bill_data = {}
+              for (var i = 0; i < session_bill.length; i++) {
+                if (session_bill.committee_ids){
+                  var committee_name = session_bill[i].committee_ids[0]
+
+                  if (bill_data.hasOwnProperty(committee_name)){
+                      bill_data[committee_name]++;
+                  } else {
+                      bill_data[committee_name] = 1;
+                  };
                 };
               };
-            };
-            console.log(bill_data)
+              console.log(bill_data)
+            });
+
+
+          }).fail(function(error){
+            console.log(error)
           });
 
+          var sessionData = {
+            labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
+            datasets: [
+              {
+                label: "Active",
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,0.8)",
+                highlightFill: "rgba(220,220,220,0.75)",
+                highlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56, 55, 90]
+              }
+            ]
+          };
+          new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: false, barStrokeWidth : 1});
 
-        }).fail(function(error){
-          console.log(error)
-        });
-
-        var sessionData = {
-          labels: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"],
-          datasets: [
-            {
-              label: "Active",
-              fillColor: "rgba(220,220,220,0.5)",
-              strokeColor: "rgba(220,220,220,0.8)",
-              highlightFill: "rgba(220,220,220,0.75)",
-              highlightStroke: "rgba(220,220,220,1)",
-              data: [65, 59, 80, 81, 56, 55, 90]
-            }
-          ]
-        };
-        new Chart(congress).Bar(sessionData, {scaleShowHorizontalLines: false, barStrokeWidth : 1});
-
-      </script>
+        </script>
+      </div>
 
       <a class="chart-link" href="#chart-3-container" >
       <img id="down_arrow" src='/images/arrow_btn_d_blue.png'/></a>
-    </div>
+    </div> <!-- 'END #chart-2-container' -->
+
 
     <div class="chart-containers" id='chart-3-container'>
       <a class="chart-link" href="#chart-2-container" >
       <img id="up_arrow" src='/images/arrow_btn_u_red.png'/></a>
 
-      <div id="session" style="width:100%; height:400px;">
-        <script>
-          $(function () {
-            $('#session').highcharts({
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Active, Pass, Fail status of bills in this Congressional Session'
-                },
-                xAxis: {
-                    categories: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"]
-                },
-                yAxis: {
-                    title: {
-                        text: 'Status'
-                    }
-                },
-                series: [{
-                    name: 'Active',
-                    data: [5, 7, 3]
-                }, {
-                    name: 'Pass',
-                    data: [2,3,1]
-                }, {
-                    name: 'Fail',
-                    data: [1, 0, 2]
-                }]
+
+      <div class="content-container">
+        <div id="session" style="width:100%; height:400px;">
+          <script>
+            $(function () {
+              $('#session').highcharts({
+                  chart: {
+                      type: 'bar'
+                  },
+                  title: {
+                      text: 'Active, Pass, Fail status of bills in this Congressional Session'
+                  },
+                  xAxis: {
+                      categories: ["Agriculture", "Education", "Defense", "Water Mgmt", "NASA", "HUD", "Immigration"]
+                  },
+                  yAxis: {
+                      title: {
+                          text: 'Status'
+                      }
+                  },
+                  series: [{
+                      name: 'Active',
+                      data: [5, 7, 3]
+                  }, {
+                      name: 'Pass',
+                      data: [2,3,1]
+                  }, {
+                      name: 'Fail',
+                      data: [1, 0, 2]
+                  }]
+              });
             });
-          });
-        </script>
-      </div>
+          </script>
+        </div>
+      </div> <!-- END content-container -->
       <a class="chart-link" href="#chart-4-container" >
       <img id="down_arrow" src='/images/arrow_btn_d_blue.png'/></a>
     </div> <!-- #chart-3-container END -->
@@ -192,94 +198,107 @@
     <div class="chart-containers" id='chart-4-container'>
       <a class="chart-link" href="#chart-5-container"><img id="up_arrow" src='/images/arrow_btn_u_red.png'/></a>
 
-      <div id="houseVsSenate" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-      <script>
-      $(function () {
+      <div class="content-container">
+        <div id="houseVsSenate" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+        <script>
+        $(function () {
 
-        var categories = ['Agriculture', 'DARPA', 'Education', 'Defense',
-                'Water', 'Climate Change', 'Foreign Relations', 'Immigration', 'Veteran Affairs',
-                'Defunding Saskatoon ', 'Appropriations', 'Ethics', 'Judiciary', 'Rules',
-                'Budget', 'Small Business', 'Ways & Means', 'Homeland Security', 'Environment and Public Works',
-                'Energy and National Resources', 'Science, Space, & Tech'];
-        $(document).ready(function () {
-            $('#houseVsSenate').highcharts({
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'House vs. Senate'
-                },
-                // subtitle: {
-                //     text: 'Source: <a href="http://populationpyramid.net/germany/2015/">Population Pyramids of the World from 1950 to 2100</a>'
-                // },
-                xAxis: [{
-                    categories: categories,
-                    reversed: false,
-                    labels: {
-                        step: 1
-                    }
-                }, { // mirror axis on right side
-                    opposite: true,
-                    reversed: false,
-                    categories: categories,
-                    linkedTo: 0,
-                    labels: {
-                        step: 1
-                    }
-                }],
-                yAxis: {
-                    title: {
-                        text: 'Committees'
-                    },
-                    labels: {
-                        formatter: function () {
+          var categories = ['Agriculture', 'DARPA', 'Education', 'Defense',
+                  'Water', 'Climate Change', 'Foreign Relations', 'Immigration', 'Veteran Affairs',
+                  'Defunding Saskatoon ', 'Appropriations', 'Ethics', 'Judiciary', 'Rules',
+                  'Budget', 'Small Business', 'Ways & Means', 'Homeland Security', 'Environment and Public Works',
+                  'Energy and National Resources', 'Science, Space, & Tech'];
+          $(document).ready(function () {
+              $('#houseVsSenate').highcharts({
+                  chart: {
+                      type: 'bar'
+                  },
+                  title: {
+                      text: 'House vs. Senate'
+                  },
+                  // subtitle: {
+                  //     text: 'Source: <a href="http://populationpyramid.net/germany/2015/">Population Pyramids of the World from 1950 to 2100</a>'
+                  // },
+                  xAxis: [{
+                      categories: categories,
+                      reversed: false,
+                      labels: {
+                          step: 1
+                      }
+                  }, { // mirror axis on right side
+                      opposite: true,
+                      reversed: false,
+                      categories: categories,
+                      linkedTo: 0,
+                      labels: {
+                          step: 1
+                      }
+                  }],
+                  yAxis: {
+                      title: {
+                          text: 'Committees'
+                      },
+                      labels: {
+                          formatter: function () {
 
-                            return Math.abs(this.value);
-                        }
-                    }
-                },
+                              return Math.abs(this.value);
+                          }
+                      }
+                  },
 
-                plotOptions: {
-                    series: {
-                        stacking: 'normal'
-                    }
-                },
+                  plotOptions: {
+                      series: {
+                          stacking: 'normal'
+                      }
+                  },
 
-                tooltip: {
-                    formatter: function () {
-                        return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
-                            'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
-                    }
-                },
+                  tooltip: {
+                      formatter: function () {
+                          return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                              'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+                      }
+                  },
 
-                series: [{
-                    name: 'House',
-                    data: [-2.2, -2.2, -2.3, -2.5, -2.7, -3.1, -3.2,
-                        -3.0, -3.2, -4.3, -4.4, -3.6, -3.1, -2.4,
-                        -2.5, -2.3, -1.2, -0.6, -0.2, -0.0, -0.0]
-                }, {
-                    name: 'Senate',
-                    data: [2.1, 2.0, 2.2, 2.4, 2.6, 3.0, 3.1, 2.9,
-                        3.1, 4.1, 4.3, 3.6, 3.4, 2.6, 2.9, 2.9,
-                        1.8, 1.2, 0.6, 0.1, 0.0]
-                    }]
-                });
-            });
+                  series: [{
+                      name: 'House',
+                      data: [-2.2, -2.2, -2.3, -2.5, -2.7, -3.1, -3.2,
+                          -3.0, -3.2, -4.3, -4.4, -3.6, -3.1, -2.4,
+                          -2.5, -2.3, -1.2, -0.6, -0.2, -0.0, -0.0]
+                  }, {
+                      name: 'Senate',
+                      data: [2.1, 2.0, 2.2, 2.4, 2.6, 3.0, 3.1, 2.9,
+                          3.1, 4.1, 4.3, 3.6, 3.4, 2.6, 2.9, 2.9,
+                          1.8, 1.2, 0.6, 0.1, 0.0]
+                      }]
+                  });
+              });
 
-        });
-        </script>
+          });
+          </script>
+        </div>
 
       <a class="chart-link" href="#chart-5-container" >
       <img id="down_arrow" src='/images/arrow_btn_d_blue.png'/></a>
     </div> <!-- #chart-4-container END -->
 
+    <!-- *** Chart 5 *** -->
     <div class="chart-containers" id='chart-5-container'>
       <a href="#chart-opening"><img id="up_arrow" src='/images/arrow_btn_u_red.png'/></a>
 
+      <div class="content-container">
         <div id="bill-by-committee">
-
         </div> <!-- END: #bill-by-committee -->
+      </div>
+        <button type='button' id='abt_btn'>About the Team</button>
     </div> <!-- #chart-5-container END -->
+
+    <!-- *** About Us *** -->
+    <div class="chart-containers" id='about-container'>
+      <div class="content-container">
+
+      </div>
+    </div> <!-- END #about-container -->
+
 
       <!-- Floor Updates Feed -->
     <div id='bill-list-container'>

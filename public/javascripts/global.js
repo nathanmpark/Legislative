@@ -6,7 +6,8 @@ getBills();
 
 //DOCUMENT READY METHODS
 $(document).ready(function() {
-
+    console.log("Upcoming:");
+    upcomingBillNum($);
 });
 
 
@@ -32,6 +33,19 @@ function getUpcomingUrl(){
 
 function getFloorUpdatesUrl(bill_id){
     return 'https://congress.api.sunlightfoundation.com/floor_updates?bill_ids=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152'
+}
+
+function upcomingBillNum(object){
+    var url = getUpcomingUrl();
+    $.ajax({
+        type: 'GET',
+        url: url,
+        dataType: 'JSON'
+    }).done(function(response){
+        var total = response.results.length.toString();
+        var input = '<h1 style="font-size:50px"><b>' + total + '</b></h1>';
+        $('#answer').html(input);
+    })
 }
 
 function getBills() {
