@@ -2,6 +2,10 @@ body {
   position: relative;
   margin: 0;
   padding: 0;
+  font-family: Constantia;
+}
+
+p {
 }
 
 /* ********* *//* ********* */
@@ -16,59 +20,52 @@ body {
 }
 /* ********* *//* ********* */
 
-#cover_fill {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  /*border: 2px dotted red;*/
-  background-color: grey;
-  opacity: 0.8;
-}
-
-#cover_container{
-  position: fixed;
-  top: 25%;
-  left: 35%;
-
-  /*border: 2px dotted red;*/
-}
-
-#cover_image {
-  position: relative;
-  display: block;
-  opacity: 1;
-/*  top: 30%;
-  left: 30%;*/
-  height: 300px;
-  width: auto;
-}
-
-#cover_btn {
-  position: relative;
-  height: 150px;
-  width: auto;
-  left: 24%;
-}
-
-#cover_text {
-  position: relative;
-}
-
 #front_logo {
   position: relative;
   display: block;
   margin: auto;
-  top: 5%;
+  top: 0;
 /*  left: 25%;*/
-  height: 350px;
+  height: 250px;
 }
 
 #front_btn {
   position: relative;
   display: block;
   margin: auto;
-  margin-top: 120px;
+  margin-top: 5%;
   height: 150px;
+}
+
+#front_img {
+  position: absolute;
+  width: 100%;
+  height: calc(100vh);
+  left: 0px;
+  top: 0px;
+  opacity: 0.05;
+}
+
+#front_text {
+  font-family: Constantia;
+  font-weight: bold;
+  text-align: center;
+  font-size: 40px;
+  color: #262261;
+}
+
+#front_box {
+  margin: auto;
+  margin-top: 5%;
+  /*border: 4px solid #262261;*/
+  width: 40%;
+}
+
+#answer {
+  margin-top: -20px;
+  font-family: Constantia;
+  text-align: center;
+  color: #262261;
 }
 
 /* *** CHART CONTAINERS *** */
@@ -85,24 +82,28 @@ body {
 }
 
 #chart-1-container {
-  background-color: #006699;
+  background-color: #D3D3D3;
 }
 
 #chart-2-container {
-  background-color: #a2798f;
+  background-color: #6880c3;
 }
 
 #chart-3-container {
-  background-color: #006699;
+  background-color: #D3D3D3;
 }
 
 #chart-4-container {
   /*border: 2px dotted red;*/
-  background-color: #a2798f;
+  background-color: #6880c3;
 }
 
 #chart-5-container {
-  background-color: #006699;
+  background-color: #D3D3D3;
+}
+
+#about-container {
+  background-color: #6880c3;
 }
 
 #up_arrow {
@@ -123,6 +124,11 @@ body {
 }
 
 /* **** CONTENT ***** */
+.content-container {
+  /*border: 2px dotted red;*/
+  height: 90%;
+}
+
 #text-right {
   float: right;
   width: 40%;
@@ -130,6 +136,13 @@ body {
 
 /* ********* *//* ********* */
 /* ********* *//* ********* */
+
+#abt_btn {
+  position: relative;
+  display: block;
+  margin: auto;
+}
+
 
 
 .details-button-right {
