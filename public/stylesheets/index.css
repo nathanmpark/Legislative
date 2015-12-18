@@ -3,10 +3,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: Constantia;
+  color: #262261;
 }
 
-p {
-}
 
 /* ********* *//* ********* */
 /* *** CHART CONTAINERS *** */
@@ -19,6 +18,15 @@ p {
   position: inline-block;
 }
 /* ********* *//* ********* */
+
+.team-member {
+  display: inline-block;
+  padding-left: 1%;
+}
+
+.team-image {
+  width: 260px;
+}
 
 #front_logo {
   position: relative;
@@ -129,7 +137,10 @@ p {
 .content-container {
   /*border: 2px dotted red;*/
   height: 90%;
+}
 
+#about-container {
+  padding-top: 5%;
 }
 
 #text-right {
@@ -179,4 +190,11 @@ p {
   margin: 50px;
 }
 
+#about_btn {
+  position: relative;
+  display: block;
+  margin: auto;
+  margin-top: 5%;
+  height: 100px;
+}
 
