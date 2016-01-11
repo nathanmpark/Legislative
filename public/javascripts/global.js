@@ -82,14 +82,22 @@ function populateFloorUpdates(api_response) {
     var tableContent = '';
     var bills = api_response.results;
 
-    $.each(bills, function(){
+    for(i = 0; i < 10; i++){
         tableContent += '<tr>';
-        tableContent += '<td>' + this.timestamp + '</td>';
-        tableContent += '<td>' + this.bill_ids[0] + '</td>';
-        tableContent += '<td>' + this.chamber + '</td>';
-        tableContent += '<td>' + this.update + '</td>';
+        tableContent += '<td>' + bills[i].timestamp + '</td>';
+        tableContent += '<td>' + bills[i].bill_ids[0] + '</td>';
+        tableContent += '<td>' + bills[i].chamber + '</td>';
+        tableContent += '<td>' + bills[i].update + '</td>';
         tableContent += '</tr>';
-    });
+    };
+    // $.each(bills, function(){
+    //     tableContent += '<tr>';
+    //     tableContent += '<td>' + this.timestamp + '</td>';
+    //     tableContent += '<td>' + this.bill_ids[0] + '</td>';
+    //     tableContent += '<td>' + this.chamber + '</td>';
+    //     tableContent += '<td>' + this.update + '</td>';
+    //     tableContent += '</tr>';
+    // });
 
     $('#billList table tbody').html(tableContent);
 };
