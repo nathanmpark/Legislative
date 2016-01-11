@@ -10,39 +10,6 @@ var points = []
 $(document).ready(function() {
     console.log("Upcoming:");
     upcomingBillNum($);
-
-    $('#bill-by-committee').highcharts({
-        series: [{
-            type: 'treemap',
-            layoutAlgorithm: 'squarified',
-            allowDrillToNode: true,
-            dataLabels: {
-                enabled: false
-            },
-            levelIsConstant: false,
-            levels: [{
-                level: 1,
-                layoutAlgorithm: 'squarified',
-                color: 'red',
-                dataLabels: {
-                    enabled: true
-                },
-                borderWidth: 3
-            },
-            {
-                level: 2,
-                layoutAlgorithm: 'squarified',
-                color: 'blue',
-                dataLabels: {
-                    enabled: false
-                },
-            }],
-            data: points
-        }],
-        title: {
-            text: 'Bills by Committee (Per Session)'
-        }
-    });
 });
 
 
