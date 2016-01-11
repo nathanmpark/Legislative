@@ -11,7 +11,6 @@ router.get('/bill_list', function(req, res) {
         } else {
             res.json(docs);
         }
-        // res.json(docs);
     });
 });
 
