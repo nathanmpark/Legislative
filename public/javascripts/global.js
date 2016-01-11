@@ -10,39 +10,6 @@ var points = []
 $(document).ready(function() {
     console.log("Upcoming:");
     upcomingBillNum($);
-
-    $('#bill-by-committee').highcharts({
-        series: [{
-            type: 'treemap',
-            layoutAlgorithm: 'squarified',
-            allowDrillToNode: true,
-            dataLabels: {
-                enabled: false
-            },
-            levelIsConstant: false,
-            levels: [{
-                level: 1,
-                layoutAlgorithm: 'squarified',
-                color: 'red',
-                dataLabels: {
-                    enabled: true
-                },
-                borderWidth: 3
-            },
-            {
-                level: 2,
-                layoutAlgorithm: 'squarified',
-                color: 'blue',
-                dataLabels: {
-                    enabled: false
-                },
-            }],
-            data: points
-        }],
-        title: {
-            text: 'Bills by Committee (Per Session)'
-        }
-    });
 });
 
 
@@ -115,14 +82,22 @@ function populateFloorUpdates(api_response) {
     var tableContent = '';
     var bills = api_response.results;
 
-    $.each(bills, function(){
+    for(i = 0; i < 10; i++){
         tableContent += '<tr>';
-        tableContent += '<td>' + this.timestamp + '</td>';
-        tableContent += '<td>' + this.bill_ids[0] + '</td>';
-        tableContent += '<td>' + this.chamber + '</td>';
-        tableContent += '<td>' + this.update + '</td>';
+        tableContent += '<td>' + bills[i].timestamp + '</td>';
+        tableContent += '<td>' + bills[i].bill_ids[0] + '</td>';
+        tableContent += '<td>' + bills[i].chamber + '</td>';
+        tableContent += '<td>' + bills[i].update + '</td>';
         tableContent += '</tr>';
-    });
+    };
+    // $.each(bills, function(){
+    //     tableContent += '<tr>';
+    //     tableContent += '<td>' + this.timestamp + '</td>';
+    //     tableContent += '<td>' + this.bill_ids[0] + '</td>';
+    //     tableContent += '<td>' + this.chamber + '</td>';
+    //     tableContent += '<td>' + this.update + '</td>';
+    //     tableContent += '</tr>';
+    // });
 
     $('#billList table tbody').html(tableContent);
 };
