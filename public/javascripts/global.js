@@ -12,10 +12,6 @@ $(document).ready(function() {
     upcomingBillNum($);
 });
 
-
-
-
-
 //***** API CALL FUNCTIONS *****
 function getBillUrl(bill_id) {
     return 'https://congress.api.sunlightfoundation.com/bills?bill_id=' + bill_id + '&apikey=838cd938cfb244a7a5728083f9191152';

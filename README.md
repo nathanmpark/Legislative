@@ -3,11 +3,17 @@ Stay up to date on current bills hitting the house and senate floors
 
 http://legislative-n.herokuapp.com/
 
-# Getting Started using Terminal
+## Getting Started using Terminal
 1. git clone https://github.com/nathanmpark/Legislative.git
 2. npm install
 3. npm start
 4. http://localhost:3000
+
+## File Structure
+* public/javascripts/global.js - houses all the API calls and data structure manipulation
+* public/javascripts/global.js - contains the JavaScript for the front end view
+* routes/bills.js - routes for kicking off API calls, seeding, and testing datastructures
+* views/index.ejs - embedded javascript/html file for front end view
 
 ### Pitch
 
