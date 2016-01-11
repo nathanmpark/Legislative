@@ -11,7 +11,7 @@ http://legislative-n.herokuapp.com/
 
 ## File Structure
 * public/javascripts/global.js - houses all the API calls and data structure manipulation
-* public/javascripts/global.js - contains the JavaScript for the front end view
+* public/javascripts/index.js - contains the JavaScript for the front end view
 * routes/bills.js - routes for kicking off API calls, seeding, and testing datastructures
 * views/index.ejs - embedded javascript/html file for front end view
 
