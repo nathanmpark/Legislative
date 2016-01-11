@@ -1,6 +1,14 @@
 # Legislative
 Stay up to date on current bills hitting the house and senate floors
 
+http://legislative-n.herokuapp.com/
+
+# Getting Started using Terminal
+1. git clone https://github.com/nathanmpark/Legislative.git
+2. npm install
+3. npm start
+4. http://localhost:3000
+
 ### Pitch
 
 Hi my name is Nathan, and I’m from Washington, DC.
